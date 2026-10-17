@@ -2,1965 +2,3201 @@
    EFECTOS PREMIUM · XV ZOE ISHEL
    ========================================================= */
 
-(() => {
+:root {
 
-  "use strict";
+  --fx-pink:
+    235, 116, 164;
 
+  --fx-blush:
+    255, 205, 225;
 
-  const reducedMotion =
-    window
-      .matchMedia(
-        "(prefers-reduced-motion: reduce)"
-      )
-      .matches;
-
-
-  const finePointer =
-    window
-      .matchMedia(
-        "(pointer: fine)"
-      )
-      .matches;
-
-
-
-  /* =====================================================
-     PARTÍCULAS
-     ===================================================== */
-
-  class SparkField {
-
-
-    constructor(
-      canvas
-    ) {
-
-
-      this.canvas =
-        canvas;
-
-
-      this.ctx =
-        canvas.getContext(
-          "2d"
-        );
-
-
-      this.particles =
-        [];
-
-
-      this.width =
-        0;
-
-
-      this.height =
-        0;
-
-
-      this.dpr =
-        1;
-
-
-      this.resize =
-        this.resize.bind(
-          this
-        );
-
-
-      this.animate =
-        this.animate.bind(
-          this
-        );
-
-
-      this.resize();
-
-
-      window.addEventListener(
-
-        "resize",
-
-        this.resize,
-
-        {
-          passive: true
-        }
-
-      );
-
-
-      if (
-        reducedMotion
-      ) {
-
-
-        this.draw(
-          performance.now()
-        );
-
-
-      } else {
-
-
-        this.animate(
-          performance.now()
-        );
-
-
-      }
-
-
-    }
-
-
-
-    resize() {
-
-
-      const rect =
-        this.canvas
-          .getBoundingClientRect();
-
-
-      this.width =
-        Math.max(
-          1,
-          rect.width
-        );
-
-
-      this.height =
-        Math.max(
-          1,
-          rect.height
-        );
-
-
-      this.dpr =
-        Math.min(
-          window.devicePixelRatio || 1,
-          1.5
-        );
-
-
-      this.canvas.width =
-        Math.round(
-          this.width *
-          this.dpr
-        );
-
-
-      this.canvas.height =
-        Math.round(
-          this.height *
-          this.dpr
-        );
-
-
-      this.ctx.setTransform(
-
-        this.dpr,
-        0,
-        0,
-        this.dpr,
-        0,
-        0
-
-      );
-
-
-      const area =
-        this.width *
-        this.height;
-
-
-      const count =
-        Math.max(
-
-          26,
-
-          Math.min(
-
-            72,
-
-            Math.round(
-              area /
-              19000
-            )
-
-          )
-
-        );
-
-
-      this.particles =
-        Array.from(
-
-          {
-            length:
-              count
-          },
-
-          (
-            _,
-            index
-          ) => ({
-
-
-            x:
-              Math.random() *
-              this.width,
-
-
-            y:
-              Math.random() *
-              this.height,
-
-
-            size:
-              0.55 +
-              Math.random() *
-              1.65,
-
-
-            glow:
-              5 +
-              Math.random() *
-              15,
-
-
-            phase:
-              Math.random() *
-              Math.PI *
-              2,
-
-
-            speed:
-              0.00065 +
-              Math.random() *
-              0.00125,
-
-
-            driftX:
-              (
-                Math.random() -
-                0.5
-              ) *
-              0.025,
-
-
-            driftY:
-              -0.004 -
-              Math.random() *
-              0.018,
-
-
-            cross:
-              index %
-              4 ===
-              0
-
-
-          })
-
-        );
-
-
-    }
-
-
-
-    draw(
-      time
-    ) {
-
-
-      const ctx =
-        this.ctx;
-
-
-      ctx.clearRect(
-
-        0,
-        0,
-        this.width,
-        this.height
-
-      );
-
-
-      ctx.save();
-
-
-      ctx.globalCompositeOperation =
-        "screen";
-
-
-      for (
-        const p
-        of this.particles
-      ) {
-
-
-        if (
-          !reducedMotion
-        ) {
-
-
-          p.x +=
-            p.driftX;
-
-
-          p.y +=
-            p.driftY;
-
-
-          if (
-            p.y <
-            -12
-          ) {
-
-
-            p.y =
-              this.height +
-              12;
-
-
-          }
-
-
-          if (
-            p.x <
-            -12
-          ) {
-
-
-            p.x =
-              this.width +
-              12;
-
-
-          }
-
-
-          if (
-            p.x >
-            this.width +
-            12
-          ) {
-
-
-            p.x =
-              -12;
-
-
-          }
-
-
-        }
-
-
-        const pulse =
-          0.5 +
-          0.5 *
-          Math.sin(
-
-            p.phase +
-            time *
-            p.speed
-
-          );
-
-
-        const alpha =
-          0.10 +
-          pulse *
-          0.62;
-
-
-        const radius =
-          p.size *
-          (
-            0.75 +
-            pulse *
-            0.65
-          );
-
-
-        ctx.save();
-
-
-        ctx.globalAlpha =
-          alpha;
-
-
-        ctx.shadowBlur =
-          p.glow;
-
-
-        ctx.shadowColor =
-          "rgba(255,190,218,0.95)";
-
-
-        ctx.fillStyle =
-          "rgba(255,255,255,0.96)";
-
-
-        ctx.beginPath();
-
-
-        ctx.arc(
-
-          p.x,
-          p.y,
-          radius,
-          0,
-          Math.PI *
-          2
-
-        );
-
-
-        ctx.fill();
-
-
-
-        if (
-          p.cross &&
-          pulse >
-          0.64
-        ) {
-
-
-          const arm =
-            4 +
-            pulse *
-            7;
-
-
-          ctx.strokeStyle =
-            `rgba(
-              255,
-              255,
-              255,
-              ${
-                0.22 +
-                pulse *
-                0.45
-              }
-            )`;
-
-
-          ctx.lineWidth =
-            0.75;
-
-
-          ctx.beginPath();
-
-
-          ctx.moveTo(
-
-            p.x -
-            arm,
-
-            p.y
-
-          );
-
-
-          ctx.lineTo(
-
-            p.x +
-            arm,
-
-            p.y
-
-          );
-
-
-          ctx.moveTo(
-
-            p.x,
-
-            p.y -
-            arm
-
-          );
-
-
-          ctx.lineTo(
-
-            p.x,
-
-            p.y +
-            arm
-
-          );
-
-
-          ctx.stroke();
-
-
-        }
-
-
-        ctx.restore();
-
-
-      }
-
-
-      ctx.restore();
-
-
-    }
-
-
-
-    animate(
-      time
-    ) {
-
-
-      if (
-        !document.hidden
-      ) {
-
-
-        this.draw(
-          time
-        );
-
-
-      }
-
-
-      requestAnimationFrame(
-        this.animate
-      );
-
-
-    }
-
-
-  }
-
-
-
-  document
-    .querySelectorAll(
-      ".ambient-canvas"
-    )
-    .forEach(
-
-      (
-        canvas
-      ) => {
-
-
-        new SparkField(
-          canvas
-        );
-
-
-      }
-
-    );
-
-
-
-  /* =====================================================
-     LUZ DEL PUNTERO
-     ===================================================== */
-
-  function setPointerVars(
-
-    element,
-    event,
-    xVar,
-    yVar
-
-  ) {
-
-
-    const rect =
-      element
-        .getBoundingClientRect();
-
-
-    const x =
-      (
-        (
-          event.clientX -
-          rect.left
-        ) /
-        rect.width
-      ) *
-      100;
-
-
-    const y =
-      (
-        (
-          event.clientY -
-          rect.top
-        ) /
-        rect.height
-      ) *
-      100;
-
-
-    element.style.setProperty(
-
-      xVar,
-
-      `${
-        Math.max(
-          0,
-          Math.min(
-            100,
-            x
-          )
-        )
-      }%`
-
-    );
-
-
-    element.style.setProperty(
-
-      yVar,
-
-      `${
-        Math.max(
-          0,
-          Math.min(
-            100,
-            y
-          )
-        )
-      }%`
-
-    );
-
-
-  }
-
-
-
-  const cover =
-    document.querySelector(
-      ".xv-section"
-    );
-
-
-  const section2 =
-    document.querySelector(
-      ".zoe-section"
-    );
-
-
-  const familySection =
-    document.querySelector(
-      ".family-section"
-    );
-
-
-  const familyPaper =
-    document.querySelector(
-      ".family-paper"
-    );
-
-
-  const card =
-    document.querySelector(
-      ".invitation-card"
-    );
-
-
-
-  /* =====================================================
-     LUZ PORTADA
-     ===================================================== */
-
-  if (
-    cover
-  ) {
-
-
-    cover.addEventListener(
-
-      "pointermove",
-
-      (
-        event
-      ) => {
-
-
-        setPointerVars(
-
-          cover,
-          event,
-          "--fx-x",
-          "--fx-y"
-
-        );
-
-
-      },
-
-      {
-        passive:
-          true
-      }
-
-    );
-
-
-  }
-
-
-
-  /* =====================================================
-     LUZ SECCIÓN 02
-     ===================================================== */
-
-  if (
-    section2
-  ) {
-
-
-    section2.addEventListener(
-
-      "pointermove",
-
-      (
-        event
-      ) => {
-
-
-        setPointerVars(
-
-          section2,
-          event,
-          "--section2-x",
-          "--section2-y"
-
-        );
-
-
-      },
-
-      {
-        passive:
-          true
-      }
-
-    );
-
-
-  }
-
-
-
-  /* =====================================================
-     LUZ SECCIÓN 03
-     ===================================================== */
-
-  if (
-    familySection
-  ) {
-
-
-    familySection.addEventListener(
-
-      "pointermove",
-
-      (
-        event
-      ) => {
-
-
-        setPointerVars(
-
-          familySection,
-          event,
-          "--family-x",
-          "--family-y"
-
-        );
-
-
-      },
-
-      {
-        passive:
-          true
-      }
-
-    );
-
-
-  }
-
-
-
-  /* =====================================================
-     PORTADA · EFECTO 3D
-     ===================================================== */
-
-  if (
-    card &&
-    finePointer &&
-    !reducedMotion
-  ) {
-
-
-    card.addEventListener(
-
-      "pointermove",
-
-      (
-        event
-      ) => {
-
-
-        const rect =
-          card
-            .getBoundingClientRect();
-
-
-        const px =
-          (
-            event.clientX -
-            rect.left
-          ) /
-          rect.width;
-
-
-        const py =
-          (
-            event.clientY -
-            rect.top
-          ) /
-          rect.height;
-
-
-        const rotateY =
-          (
-            px -
-            0.5
-          ) *
-          4.2;
-
-
-        const rotateX =
-          (
-            0.5 -
-            py
-          ) *
-          3;
-
-
-        card.style.setProperty(
-
-          "--card-x",
-
-          `${
-            px *
-            100
-          }%`
-
-        );
-
-
-        card.style.setProperty(
-
-          "--card-y",
-
-          `${
-            py *
-            100
-          }%`
-
-        );
-
-
-        card.style.transform =
-          `perspective(1200px)
-           rotateX(${rotateX}deg)
-           rotateY(${rotateY}deg)
-           translateY(-1px)`;
-
-
-        card.classList.add(
-          "fx-hover"
-        );
-
-
-      }
-
-    );
-
-
-    card.addEventListener(
-
-      "pointerleave",
-
-      () => {
-
-
-        card.style.setProperty(
-
-          "--card-x",
-          "50%"
-
-        );
-
-
-        card.style.setProperty(
-
-          "--card-y",
-          "35%"
-
-        );
-
-
-        card.style.transform =
-          "perspective(1200px) rotateX(0deg) rotateY(0deg)";
-
-
-        card.classList.remove(
-          "fx-hover"
-        );
-
-
-      }
-
-    );
-
-
-  }
-
-
-
-  /* =====================================================
-     MARCO FLORAL · EFECTO 3D
-     ===================================================== */
-
-  if (
-    familyPaper &&
-    finePointer &&
-    !reducedMotion
-  ) {
-
-
-    familyPaper.addEventListener(
-
-      "pointermove",
-
-      (
-        event
-      ) => {
-
-
-        const rect =
-          familyPaper
-            .getBoundingClientRect();
-
-
-        const px =
-          (
-            event.clientX -
-            rect.left
-          ) /
-          rect.width;
-
-
-        const py =
-          (
-            event.clientY -
-            rect.top
-          ) /
-          rect.height;
-
-
-        const rotateY =
-          (
-            px -
-            0.5
-          ) *
-          2.1;
-
-
-        const rotateX =
-          (
-            0.5 -
-            py
-          ) *
-          1.4;
-
-
-        familyPaper.style.setProperty(
-
-          "--paper-x",
-
-          `${
-            px *
-            100
-          }%`
-
-        );
-
-
-        familyPaper.style.setProperty(
-
-          "--paper-y",
-
-          `${
-            py *
-            100
-          }%`
-
-        );
-
-
-        familyPaper.style.transform =
-          `perspective(1500px)
-           rotateX(${rotateX}deg)
-           rotateY(${rotateY}deg)`;
-
-
-        familyPaper.classList.add(
-          "fx-family-hover"
-        );
-
-
-      }
-
-    );
-
-
-    familyPaper.addEventListener(
-
-      "pointerleave",
-
-      () => {
-
-
-        familyPaper.style.setProperty(
-
-          "--paper-x",
-          "50%"
-
-        );
-
-
-        familyPaper.style.setProperty(
-
-          "--paper-y",
-          "38%"
-
-        );
-
-
-        familyPaper.style.transform =
-          "perspective(1500px) rotateX(0deg) rotateY(0deg)";
-
-
-        familyPaper.classList.remove(
-          "fx-family-hover"
-        );
-
-
-      }
-
-    );
-
-
-  }
-
-
-
-  /* =====================================================
-     ENTRADAS AL HACER SCROLL
-     ===================================================== */
-
-  const revealTargets = [
-
-    ".section2-small",
-
-    ".section2-title",
-
-    ".section2-name",
-
-    ".section2-divider",
-
-    ".princess-area",
-
-    ".phrase-card",
-
-    ".section2-continue",
-
-    ".family-reveal"
-
-  ];
-
-
-
-  const revealNodes =
-    revealTargets
-      .flatMap(
-
-        (
-          selector
-        ) =>
-
-          Array.from(
-
-            document
-              .querySelectorAll(
-                selector
-              )
-
-          )
-
-      );
-
-
-
-  revealNodes.forEach(
-
-    (
-      node,
-      index
-    ) => {
-
-
-      /*
-       * Las secciones anteriores usan fx-reveal.
-       * Los elementos de familia ya usan family-reveal.
-       */
-
-      if (
-        !node.classList.contains(
-          "family-reveal"
-        )
-      ) {
-
-
-        node.classList.add(
-          "fx-reveal"
-        );
-
-
-      }
-
-
-      node.style.setProperty(
-
-        "--fx-delay",
-
-        `${
-          Math.min(
-            index *
-            90,
-            480
-          )
-        }ms`
-
-      );
-
-
-    }
-
-  );
-
-
-
-  if (
-    "IntersectionObserver" in window &&
-    !reducedMotion
-  ) {
-
-
-    const observer =
-      new IntersectionObserver(
-
-        (
-          entries,
-          obs
-        ) => {
-
-
-          entries.forEach(
-
-            (
-              entry
-            ) => {
-
-
-              if (
-                !entry.isIntersecting
-              ) {
-
-
-                return;
-
-
-              }
-
-
-              entry.target
-                .classList
-                .add(
-                  "is-visible"
-                );
-
-
-              obs.unobserve(
-                entry.target
-              );
-
-
-            }
-
-          );
-
-
-        },
-
-        {
-
-          threshold:
-            0.16,
-
-          rootMargin:
-            "0px 0px -6% 0px"
-
-        }
-
-      );
-
-
-
-    revealNodes.forEach(
-
-      (
-        node
-      ) => {
-
-
-        observer.observe(
-          node
-        );
-
-
-      }
-
-    );
-
-
-  } else {
-
-
-    revealNodes.forEach(
-
-      (
-        node
-      ) => {
-
-
-        node
-          .classList
-          .add(
-            "is-visible"
-          );
-
-
-      }
-
-    );
-
-
-  }
-
-
-
-  /* =====================================================
-     EXPLOSIÓN DE LUZ AL ABRIR
-     ===================================================== */
-
-  function createBurst(
-    x,
-    y
-  ) {
-
-
-    if (
-      reducedMotion
-    ) {
-
-
-      return;
-
-
-    }
-
-
-    const burst =
-      document.createElement(
-        "div"
-      );
-
-
-    burst.className =
-      "fx-click-burst";
-
-
-    burst.style.left =
-      `${x}px`;
-
-
-    burst.style.top =
-      `${y}px`;
-
-
-    const total =
-      18;
-
-
-    for (
-      let i = 0;
-      i < total;
-      i += 1
-    ) {
-
-
-      const particle =
-        document.createElement(
-          "span"
-        );
-
-
-      const angle =
-        (
-          Math.PI *
-          2 *
-          i
-        ) /
-        total +
-        (
-          i %
-          2
-        ) *
-        0.09;
-
-
-      const distance =
-        54 +
-        (
-          i %
-          5
-        ) *
-        14;
-
-
-      const size =
-        3 +
-        (
-          i %
-          4
-        ) *
-        1.35;
-
-
-      particle.style.setProperty(
-
-        "--dx",
-
-        `${
-          Math.cos(
-            angle
-          ) *
-          distance
-        }px`
-
-      );
-
-
-      particle.style.setProperty(
-
-        "--dy",
-
-        `${
-          Math.sin(
-            angle
-          ) *
-          distance
-        }px`
-
-      );
-
-
-      particle.style.setProperty(
-
-        "--s",
-
-        `${size}px`
-
-      );
-
-
-      particle.style.animationDelay =
-        `${
-          (
-            i %
-            4
-          ) *
-          18
-        }ms`;
-
-
-      burst.appendChild(
-        particle
-      );
-
-
-    }
-
-
-    document.body.appendChild(
-      burst
-    );
-
-
-    window.setTimeout(
-
-      () => {
-
-
-        burst.remove();
-
-
-      },
-
-      1050
-
-    );
-
-
-  }
-
-
-
-  const openButton =
-    document.getElementById(
-      "openInvitation"
-    );
-
-
-  if (
-    openButton
-  ) {
-
-
-    openButton.addEventListener(
-
-      "pointerdown",
-
-      (
-        event
-      ) => {
-
-
-        createBurst(
-
-          event.clientX,
-          event.clientY
-
-        );
-
-
-      },
-
-      {
-        passive:
-          true
-      }
-
-    );
-
-
-    openButton.addEventListener(
-
-      "click",
-
-      () => {
-
-
-        if (
-          card
-        ) {
-
-
-          card.style.transform =
-            "";
-
-
-          card.classList.remove(
-            "fx-hover"
-          );
-
-
-        }
-
-
-      }
-
-    );
-
-
-  }
-
-
-  /* =====================================================
-   SECCIÓN 03 · FAMILIA PREMIUM
-   ===================================================== */
-
-const familyPremiumSection =
-  document.querySelector(
-    ".family-section"
-  );
-
-
-const familyPremiumPaper =
-  document.querySelector(
-    ".family-paper"
-  );
-
-
-/* =====================================================
-   LUZ DEL PUNTERO
-   ===================================================== */
-
-if (
-  familyPremiumPaper
-) {
-
-  familyPremiumPaper.addEventListener(
-
-    "pointermove",
-
-    function (event) {
-
-      const rect =
-        familyPremiumPaper
-          .getBoundingClientRect();
-
-
-      const x =
-        (
-          (
-            event.clientX -
-            rect.left
-          ) /
-          rect.width
-        ) *
-        100;
-
-
-      const y =
-        (
-          (
-            event.clientY -
-            rect.top
-          ) /
-          rect.height
-        ) *
-        100;
-
-
-      familyPremiumPaper
-        .style
-        .setProperty(
-          "--paper-x",
-          `${x}%`
-        );
-
-
-      familyPremiumPaper
-        .style
-        .setProperty(
-          "--paper-y",
-          `${y}%`
-        );
-
-    },
-
-    {
-      passive: true
-    }
-
-  );
+  --fx-white:
+    255, 255, 255;
 
 }
 
-
-/* =====================================================
-   PARALLAX 3D MUY SUTIL
-   SOLO COMPUTADORA
-   ===================================================== */
-
-if (
-  familyPremiumPaper &&
-  finePointer &&
-  !reducedMotion
-) {
-
-  familyPremiumPaper.addEventListener(
-
-    "pointermove",
-
-    function (event) {
-
-      const rect =
-        familyPremiumPaper
-          .getBoundingClientRect();
-
-
-      const px =
-        (
-          event.clientX -
-          rect.left
-        ) /
-        rect.width;
-
-
-      const py =
-        (
-          event.clientY -
-          rect.top
-        ) /
-        rect.height;
-
-
-      const rotateY =
-        (
-          px -
-          0.5
-        ) *
-        1.8;
-
-
-      const rotateX =
-        (
-          0.5 -
-          py
-        ) *
-        1.15;
-
-
-      familyPremiumPaper.style.transform =
-        `
-        perspective(1500px)
-        rotateX(${rotateX}deg)
-        rotateY(${rotateY}deg)
-        `;
-
-    }
-
-  );
-
-
-  familyPremiumPaper.addEventListener(
-
-    "pointerleave",
-
-    function () {
-
-      familyPremiumPaper.style.transform =
-        `
-        perspective(1500px)
-        rotateX(0deg)
-        rotateY(0deg)
-        `;
-
-    }
-
-  );
-
-}
-
-
-/* =====================================================
-   REVEAL PROGRESIVO
-   ===================================================== */
-
-const familyPremiumReveal =
-  Array.from(
-    document.querySelectorAll(
-      ".family-reveal"
-    )
-  );
-
-
-familyPremiumReveal.forEach(
-
-  function (
-    element,
-    index
-  ) {
-
-    element.style.setProperty(
-
-      "--fx-delay",
-
-      `${index * 130}ms`
-
-    );
-
-  }
-
-);
-
-
-if (
-  "IntersectionObserver" in window &&
-  !reducedMotion
-) {
-
-  const familyObserver =
-    new IntersectionObserver(
-
-      function (
-        entries,
-        observer
-      ) {
-
-        entries.forEach(
-
-          function (
-            entry
-          ) {
-
-            if (
-              !entry.isIntersecting
-            ) {
-              return;
-            }
-
-
-            entry.target
-              .classList
-              .add(
-                "is-visible"
-              );
-
-
-            observer.unobserve(
-              entry.target
-            );
-
-          }
-
-        );
-
-      },
-
-      {
-        threshold:
-          0.18,
-
-        rootMargin:
-          "0px 0px -5% 0px"
-      }
-
-    );
-
-
-  familyPremiumReveal.forEach(
-
-    function (
-      element
-    ) {
-
-      familyObserver.observe(
-        element
-      );
-
-    }
-
-  );
-
-} else {
-
-  familyPremiumReveal.forEach(
-
-    function (
-      element
-    ) {
-
-      element
-        .classList
-        .add(
-          "is-visible"
-        );
-
-    }
-
-  );
-
-}
-
-})();
 
 /* =========================================================
-   SECCIÓN 04 · MENSAJE ESPECIAL
+   CANVAS
    ========================================================= */
 
-(() => {
+.ambient-canvas {
 
-  "use strict";
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  width:
+    100%;
+
+  height:
+    100%;
+
+  pointer-events:
+    none;
+
+  z-index:
+    4;
+
+  opacity:
+    0.9;
+
+  mix-blend-mode:
+    screen;
+
+}
 
 
-  const reducedMotion =
-    window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+.zoe-section
+.ambient-canvas {
+
+  z-index:
+    2;
+
+  opacity:
+    0.78;
+
+}
 
 
-  const messageElements =
-    Array.from(
-      document.querySelectorAll(
-        ".message-reveal"
-      )
+.family-section
+.ambient-canvas {
+
+  z-index:
+    3;
+
+  opacity:
+    0.68;
+
+}
+
+
+
+/* =========================================================
+   PORTADA · LUZ INTERACTIVA
+   ========================================================= */
+
+.xv-section {
+
+  --fx-x:
+    50%;
+
+  --fx-y:
+    42%;
+
+}
+
+
+.xv-section::before {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  inset:
+    -12%;
+
+  z-index:
+    3;
+
+  pointer-events:
+    none;
+
+  background:
+
+    radial-gradient(
+      circle
+      at var(--fx-x)
+      var(--fx-y),
+
+      rgba(255,255,255,0.24)
+      0,
+
+      rgba(255,226,238,0.16)
+      11%,
+
+      rgba(240,137,178,0.07)
+      26%,
+
+      transparent
+      46%
     );
 
+  filter:
+    blur(2px);
 
-  messageElements.forEach(
-
-    function (
-      element,
-      index
-    ) {
-
-      element.style.setProperty(
-
-        "--message-delay",
-
-        `${index * 125}ms`
-
-      );
-
-    }
-
-  );
+}
 
 
-  if (
-    "IntersectionObserver" in window &&
-    !reducedMotion
-  ) {
 
-    const messageObserver =
-      new IntersectionObserver(
+/* HAZ DE LUZ */
 
-        function (
-          entries,
-          observer
-        ) {
+.xv-section::after {
 
-          entries.forEach(
+  content:
+    "";
 
-            function (
-              entry
-            ) {
+  position:
+    absolute;
 
-              if (
-                !entry.isIntersecting
-              ) {
-                return;
-              }
+  z-index:
+    3;
 
+  top:
+    -42%;
 
-              entry.target
-                .classList
-                .add(
-                  "is-visible"
-                );
+  left:
+    -36%;
 
+  width:
+    42%;
 
-              observer.unobserve(
-                entry.target
-              );
+  height:
+    190%;
 
-            }
+  pointer-events:
+    none;
 
-          );
+  opacity:
+    0.28;
 
-        },
+  transform:
+    rotate(18deg);
 
-        {
-          threshold:
-            0.16,
+  background:
 
-          rootMargin:
-            "0px 0px -5% 0px"
-        }
-
-      );
-
-
-    messageElements.forEach(
-
-      function (
-        element
-      ) {
-
-        messageObserver.observe(
-          element
-        );
-
-      }
-
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,0.18),
+      rgba(255,225,238,0.10),
+      transparent
     );
 
-  } else {
+  filter:
+    blur(18px);
 
-    messageElements.forEach(
+  animation:
 
-      function (
-        element
-      ) {
+    fxLightBeam
+    13s
+    ease-in-out
+    infinite;
 
-        element.classList.add(
-          "is-visible"
-        );
+}
 
-      }
 
-    );
+@keyframes fxLightBeam {
+
+  0%,
+  18% {
+
+    left:
+      -38%;
+
+    opacity:
+      0;
 
   }
 
-})();
+
+  35% {
+
+    opacity:
+      0.34;
+
+  }
+
+
+  62% {
+
+    left:
+      118%;
+
+    opacity:
+      0.22;
+
+  }
+
+
+  100% {
+
+    left:
+      118%;
+
+    opacity:
+      0;
+
+  }
+
+}
+
+
 
 /* =========================================================
-   MESSAGE SECTION · LIGHT FOLLOW
+   TARJETA PORTADA · 3D
    ========================================================= */
 
-const messageSection = document.getElementById("mensaje");
+.invitation-card {
 
-if (messageSection) {
-  messageSection.addEventListener("pointermove", function (event) {
-    const rect = messageSection.getBoundingClientRect();
+  --card-x:
+    50%;
 
-    const x = ((event.clientX - rect.left) / rect.width) * 100;
-    const y = ((event.clientY - rect.top) / rect.height) * 100;
+  --card-y:
+    35%;
 
-    messageSection.style.setProperty("--message-x", `${x}%`);
-    messageSection.style.setProperty("--message-y", `${y}%`);
-  });
+  transform-style:
+    preserve-3d;
+
+  will-change:
+    transform;
+
+  backdrop-filter:
+
+    blur(7px)
+    saturate(1.08);
+
+  -webkit-backdrop-filter:
+
+    blur(7px)
+    saturate(1.08);
+
+  transition:
+
+    transform
+    220ms
+    cubic-bezier(.2,.8,.2,1),
+
+    box-shadow
+    220ms
+    ease;
+
+}
+
+
+.invitation-card::after {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  inset:
+    1px;
+
+  z-index:
+    0;
+
+  border-radius:
+    inherit;
+
+  pointer-events:
+    none;
+
+  background:
+
+    radial-gradient(
+      circle
+      at var(--card-x)
+      var(--card-y),
+
+      rgba(255,255,255,0.72)
+      0,
+
+      rgba(255,255,255,0.25)
+      13%,
+
+      rgba(255,205,226,0.09)
+      27%,
+
+      transparent
+      46%
+    ),
+
+    linear-gradient(
+      115deg,
+      rgba(255,255,255,0.22),
+      transparent 23%,
+      transparent 72%,
+      rgba(239,140,177,0.08)
+    );
+
+  mix-blend-mode:
+    screen;
+
+  opacity:
+    0.72;
+
+}
+
+
+.invitation-card > * {
+
+  transform:
+    translateZ(0.1px);
+
+}
+
+
+.invitation-card.fx-hover {
+
+  box-shadow:
+
+    0 34px 82px
+    rgba(92,37,59,0.22),
+
+    0 0 55px
+    rgba(240,147,183,0.15),
+
+    inset
+    0 0 0 6px
+    rgba(255,255,255,0.24);
+
+}
+
+
+
+/* =========================================================
+   BRILLO EN TÍTULOS
+   ========================================================= */
+
+.title-wrap,
+.name,
+.section2-name {
+
+  isolation:
+    isolate;
+
+}
+
+
+.xv-title,
+.section2-title {
+
+  position:
+    relative;
+
+}
+
+
+.xv-title::after,
+.section2-title::after {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    -12%;
+
+  left:
+    -28%;
+
+  width:
+    18%;
+
+  height:
+    125%;
+
+  pointer-events:
+    none;
+
+  opacity:
+    0;
+
+  transform:
+    skewX(-20deg);
+
+  background:
+
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,0.92),
+      transparent
+    );
+
+  filter:
+    blur(1px);
+
+  animation:
+
+    fxTitleSweep
+    6.8s
+    ease-in-out
+    infinite;
+
+}
+
+
+@keyframes fxTitleSweep {
+
+  0%,
+  68% {
+
+    left:
+      -28%;
+
+    opacity:
+      0;
+
+  }
+
+
+  73% {
+
+    opacity:
+      0.74;
+
+  }
+
+
+  89% {
+
+    opacity:
+      0.34;
+
+  }
+
+
+  100% {
+
+    left:
+      118%;
+
+    opacity:
+      0;
+
+  }
+
+}
+
+
+.open-button {
+
+  --button-x:
+    50%;
+
+  --button-y:
+    30%;
+
+  isolation:
+    isolate;
+
+}
+
+
+.open-button
+.button-label {
+
+  text-shadow:
+
+    0 1px 0
+    rgba(255,255,255,0.88),
+
+    0 3px 8px
+    rgba(96,39,61,0.13);
+
+}
+
+
+.open-button:focus-visible {
+
+  outline:
+
+    2px solid
+    rgba(150,67,100,0.65);
+
+  outline-offset:
+    4px;
+
+}
+
+
+
+/* =========================================================
+   SECCIÓN 02
+   ========================================================= */
+
+.zoe-section {
+
+  --section2-x:
+    50%;
+
+  --section2-y:
+    38%;
+
+  isolation:
+    isolate;
+
+}
+
+
+.zoe-section::before {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    1;
+
+  pointer-events:
+    none;
+
+  background:
+
+    radial-gradient(
+      circle at 14% 20%,
+      rgba(255,255,255,0.62) 0 2px,
+      transparent 4px
+    ),
+
+    radial-gradient(
+      circle at 81% 22%,
+      rgba(255,221,235,0.70) 0 3px,
+      transparent 6px
+    ),
+
+    radial-gradient(
+      circle at 22% 72%,
+      rgba(247,174,204,0.38) 0 5px,
+      transparent 10px
+    ),
+
+    radial-gradient(
+      circle at 78% 68%,
+      rgba(255,255,255,0.48) 0 4px,
+      transparent 9px
+    ),
+
+    radial-gradient(
+      circle
+      at var(--section2-x)
+      var(--section2-y),
+
+      rgba(255,255,255,0.22),
+
+      rgba(255,210,229,0.10)
+      21%,
+
+      transparent
+      46%
+    );
+
+  animation:
+
+    fxBokehBreath
+    8s
+    ease-in-out
+    infinite;
+
+}
+
+
+@keyframes fxBokehBreath {
+
+  0%,
+  100% {
+
+    opacity:
+      0.72;
+
+  }
+
+
+  50% {
+
+    opacity:
+      1;
+
+  }
+
+}
+
+
+.zoe-section::after {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  z-index:
+    1;
+
+  left:
+    50%;
+
+  bottom:
+    -220px;
+
+  width:
+    760px;
+
+  height:
+    430px;
+
+  pointer-events:
+    none;
+
+  transform:
+    translateX(-50%);
+
+  border-radius:
+    50%;
+
+  background:
+
+    radial-gradient(
+      ellipse,
+      rgba(235,112,163,0.18),
+      rgba(255,211,229,0.10) 38%,
+      transparent 71%
+    );
+
+  filter:
+    blur(28px);
+
+}
+
+
+
+/* QUINCEAÑERA */
+
+.princess-area::after {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  z-index:
+    0;
+
+  left:
+    50%;
+
+  bottom:
+    2px;
+
+  width:
+    74%;
+
+  height:
+    32px;
+
+  transform:
+    translateX(-50%);
+
+  border-radius:
+    50%;
+
+  background:
+
+    radial-gradient(
+      ellipse,
+      rgba(159,67,102,0.20),
+      rgba(233,137,174,0.10) 42%,
+      transparent 72%
+    );
+
+  filter:
+    blur(11px);
+
+}
+
+
+.princess-image::before {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  z-index:
+    2;
+
+  inset:
+
+    2%
+    8%
+    5%;
+
+  border-radius:
+    50%;
+
+  pointer-events:
+    none;
+
+  background:
+
+    conic-gradient(
+      from 210deg,
+      transparent 0 28%,
+      rgba(255,255,255,0.18) 34%,
+      rgba(255,223,236,0.32) 39%,
+      transparent 47% 100%
+    );
+
+  filter:
+    blur(12px);
+
+  opacity:
+    0.55;
+
+  animation:
+
+    fxPrincessRim
+    9s
+    linear
+    infinite;
+
+}
+
+
+@keyframes fxPrincessRim {
+
+  to {
+
+    transform:
+      rotate(360deg);
+
+  }
+
+}
+
+
+.quinceanera-img {
+
+  will-change:
+    transform,
+    filter;
+
+  filter:
+
+    drop-shadow(
+      0 18px 15px
+      rgba(103,36,62,0.16)
+    )
+
+    drop-shadow(
+      0 0 17px
+      rgba(255,210,228,0.32)
+    )
+
+    drop-shadow(
+      0 0 30px
+      rgba(255,236,244,0.18)
+    );
+
+}
+
+
+
+/* FRASE */
+
+.phrase-card {
+
+  position:
+    relative;
+
+  overflow:
+    hidden;
+
+  backdrop-filter:
+
+    blur(10px)
+    saturate(1.06);
+
+  -webkit-backdrop-filter:
+
+    blur(10px)
+    saturate(1.06);
+
+}
+
+
+.phrase-card::before {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  pointer-events:
+    none;
+
+  background:
+
+    linear-gradient(
+      120deg,
+      rgba(255,255,255,0.36),
+      transparent 25%,
+      transparent 68%,
+      rgba(244,170,199,0.10)
+    );
+
+}
+
+
+.phrase-card::after {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    -70%;
+
+  left:
+    -22%;
+
+  width:
+    16%;
+
+  height:
+    240%;
+
+  pointer-events:
+    none;
+
+  transform:
+    rotate(18deg);
+
+  background:
+
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,0.55),
+      transparent
+    );
+
+  animation:
+
+    fxCardSheen
+    9s
+    ease-in-out
+    infinite;
+
+}
+
+
+@keyframes fxCardSheen {
+
+  0%,
+  72% {
+
+    left:
+      -22%;
+
+    opacity:
+      0;
+
+  }
+
+
+  78% {
+
+    opacity:
+      0.75;
+
+  }
+
+
+  100% {
+
+    left:
+      118%;
+
+    opacity:
+      0;
+
+  }
+
+}
+
+
+.phrase-card > * {
+
+  position:
+    relative;
+
+  z-index:
+    1;
+
+}
+
+
+
+/* =========================================================
+   REVEAL
+   ========================================================= */
+
+.fx-reveal,
+.family-reveal {
+
+  opacity:
+    0;
+
+  filter:
+    blur(8px);
+
+  transform:
+
+    translateY(28px)
+    scale(0.985);
+
+  transition:
+
+    opacity
+    900ms
+    cubic-bezier(.2,.75,.25,1),
+
+    transform
+    900ms
+    cubic-bezier(.2,.75,.25,1),
+
+    filter
+    900ms
+    ease;
+
+  transition-delay:
+    var(--fx-delay, 0ms);
+
+}
+
+
+.fx-reveal.is-visible,
+.family-reveal.is-visible {
+
+  opacity:
+    1;
+
+  filter:
+    blur(0);
+
+  transform:
+
+    translateY(0)
+    scale(1);
+
+}
+
+
+.princess-area.fx-reveal {
+
+  transform:
+
+    translateY(34px)
+    scale(0.96);
+
+}
+
+
+.princess-area.fx-reveal.is-visible {
+
+  transform:
+
+    translateY(0)
+    scale(1);
+
+}
+
+
+
+/* =========================================================
+   BURST
+   ========================================================= */
+
+.fx-click-burst {
+
+  position:
+    fixed;
+
+  z-index:
+    9999;
+
+  width:
+    1px;
+
+  height:
+    1px;
+
+  pointer-events:
+    none;
+
+}
+
+
+.fx-click-burst span {
+
+  position:
+    absolute;
+
+  left:
+    0;
+
+  top:
+    0;
+
+  width:
+    var(--s, 5px);
+
+  height:
+    var(--s, 5px);
+
+  border-radius:
+    50%;
+
+  background:
+    rgba(255,255,255,0.98);
+
+  box-shadow:
+
+    0 0 7px
+    rgba(255,255,255,1),
+
+    0 0 16px
+    rgba(255,188,216,0.95),
+
+    0 0 26px
+    rgba(228,91,149,0.50);
+
+  transform:
+    translate(-50%, -50%);
+
+  animation:
+
+    fxBurstParticle
+    900ms
+    cubic-bezier(.15,.7,.25,1)
+    forwards;
+
+}
+
+
+@keyframes fxBurstParticle {
+
+  0% {
+
+    opacity:
+      1;
+
+    transform:
+
+      translate(-50%, -50%)
+      scale(0.4);
+
+  }
+
+
+  65% {
+
+    opacity:
+      0.92;
+
+  }
+
+
+  100% {
+
+    opacity:
+      0;
+
+    transform:
+
+      translate(
+        calc(-50% + var(--dx)),
+        calc(-50% + var(--dy))
+      )
+
+      scale(0.05);
+
+  }
+
+}
+
+
+
+/* =========================================================
+   SECCIÓN 03 · EFECTOS PREMIUM
+   ========================================================= */
+
+.family-section {
+
+  --family-x:
+    50%;
+
+  --family-y:
+    35%;
+
+}
+
+
+
+/* LUZ INTERACTIVA */
+
+.family-section::before {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  z-index:
+    3;
+
+  pointer-events:
+    none;
+
+  background:
+
+    radial-gradient(
+      circle at 14% 24%,
+      rgba(255,255,255,0.58) 0 2px,
+      transparent 6px
+    ),
+
+    radial-gradient(
+      circle at 82% 16%,
+      rgba(255,232,241,0.68) 0 3px,
+      transparent 8px
+    ),
+
+    radial-gradient(
+      circle at 88% 82%,
+      rgba(255,255,255,0.48) 0 3px,
+      transparent 8px
+    ),
+
+    radial-gradient(
+      circle
+      at var(--family-x)
+      var(--family-y),
+
+      rgba(255,255,255,0.26),
+
+      rgba(255,219,232,0.11)
+      22%,
+
+      transparent
+      48%
+    );
+
+  mix-blend-mode:
+    screen;
+
+}
+
+
+
+/* HAZ QUE RECORRE TODA LA SECCIÓN */
+
+.family-section::after {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    -45%;
+
+  left:
+    -30%;
+
+  z-index:
+    3;
+
+  width:
+    26%;
+
+  height:
+    190%;
+
+  pointer-events:
+    none;
+
+  transform:
+    rotate(20deg);
+
+  background:
+
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,0.14),
+      rgba(255,221,235,0.18),
+      transparent
+    );
+
+  filter:
+    blur(18px);
+
+  animation:
+
+    familyLightBeam
+    15s
+    ease-in-out
+    infinite;
+
+}
+
+
+@keyframes familyLightBeam {
+
+  0%,
+  18% {
+
+    left:
+      -30%;
+
+    opacity:
+      0;
+
+  }
+
+
+  35% {
+
+    opacity:
+      0.5;
+
+  }
+
+
+  68% {
+
+    left:
+      118%;
+
+    opacity:
+      0.18;
+
+  }
+
+
+  100% {
+
+    left:
+      118%;
+
+    opacity:
+      0;
+
+  }
+
+}
+
+
+
+/* =========================================================
+   MARCO CENTRAL 3D
+   ========================================================= */
+
+.family-stage {
+
+  --stage-x:
+    50%;
+
+  --stage-y:
+    35%;
+
+  transform-style:
+    preserve-3d;
+
+  will-change:
+    transform;
+
+  transition:
+
+    transform
+    260ms
+    cubic-bezier(.2,.75,.25,1),
+
+    box-shadow
+    260ms
+    ease;
+
+}
+
+
+.family-frame.frame-outer {
+
+  box-shadow:
+
+    inset
+    0 0 0 1px
+    rgba(255,255,255,0.55),
+
+    0 0 22px
+    rgba(238,144,181,0.10);
+
+}
+
+
+.family-stage.fx-family-hover {
+
+  box-shadow:
+
+    0 38px 90px
+    rgba(105,39,65,0.17),
+
+    0 0 62px
+    rgba(244,168,198,0.14),
+
+    inset
+    0 0 0 1px
+    rgba(255,255,255,0.72),
+
+    inset
+    0 0 50px
+    rgba(255,255,255,0.30);
+
+}
+
+
+
+/* LUZ DENTRO DEL MARCO */
+
+.family-stage
+.frame-inner::after {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  inset:
+    -28px;
+
+  border-radius:
+    inherit;
+
+  pointer-events:
+    none;
+
+  background:
+
+    radial-gradient(
+      circle
+      at var(--stage-x)
+      var(--stage-y),
+
+      rgba(255,255,255,0.38),
+
+      rgba(255,217,232,0.10)
+      24%,
+
+      transparent
+      46%
+    );
+
+  mix-blend-mode:
+    screen;
+
+}
+
+
+
+/* =========================================================
+   ORNAMENTOS ESQUINAS
+   ========================================================= */
+
+.frame-corner {
+
+  animation:
+
+    familyCornerGlow
+    4.8s
+    ease-in-out
+    infinite;
+
+}
+
+
+.corner-tr {
+
+  animation-delay:
+    0.6s;
+
+}
+
+
+.corner-bl {
+
+  animation-delay:
+    1.2s;
+
+}
+
+
+.corner-br {
+
+  animation-delay:
+    1.8s;
+
+}
+
+
+@keyframes familyCornerGlow {
+
+  0%,
+  100% {
+
+    opacity:
+      0.68;
+
+    filter:
+      brightness(1);
+
+  }
+
+
+  50% {
+
+    opacity:
+      1;
+
+    filter:
+      brightness(1.22);
+
+  }
+
+}
+
+
+
+/* =========================================================
+   FLORALES
+   ========================================================= */
+
+.family-floral {
+
+  animation:
+
+    familyFloralBreath
+    8s
+    ease-in-out
+    infinite;
+
+}
+
+
+.floral-top-mirror,
+.floral-bottom-mirror {
+
+  animation-delay:
+    1.2s;
+
+}
+
+
+@keyframes familyFloralBreath {
+
+  0%,
+  100% {
+
+    filter:
+
+      drop-shadow(
+        0 12px 24px
+        rgba(128,63,88,0.08)
+      )
+
+      brightness(1);
+
+  }
+
+
+  50% {
+
+    filter:
+
+      drop-shadow(
+        0 16px 28px
+        rgba(128,63,88,0.11)
+      )
+
+      brightness(1.04);
+
+  }
+
+}
+
+
+
+/* =========================================================
+   MARIPOSAS
+   ========================================================= */
+
+.family-butterfly {
+
+  animation:
+
+    butterflyFloat
+    6.5s
+    ease-in-out
+    infinite;
+
+}
+
+
+.butterfly-two {
+
+  animation-delay:
+    1.2s;
+
+}
+
+
+.butterfly-three {
+
+  animation-delay:
+    2.2s;
+
+}
+
+
+@keyframes butterflyFloat {
+
+  0%,
+  100% {
+
+    transform:
+
+      translate3d(0,0,0)
+      rotate(0deg);
+
+  }
+
+
+  50% {
+
+    transform:
+
+      translate3d(0,-10px,0)
+      rotate(4deg);
+
+  }
+
+}
+
+
+
+/* =========================================================
+   ESTRELLAS
+   ========================================================= */
+
+.family-star {
+
+  animation:
+
+    familyStarTwinkle
+    3.2s
+    ease-in-out
+    infinite;
+
+}
+
+
+.fs2 {
+
+  animation-delay:
+    0.8s;
+
+}
+
+
+.fs3 {
+
+  animation-delay:
+    1.4s;
+
+}
+
+
+.fs4 {
+
+  animation-delay:
+    2s;
+
+}
+
+
+.fs5 {
+
+  animation-delay:
+    2.5s;
+
+}
+
+
+@keyframes familyStarTwinkle {
+
+  0%,
+  100% {
+
+    opacity:
+      0.22;
+
+    transform:
+
+      scale(0.82)
+      rotate(0deg);
+
+  }
+
+
+  50% {
+
+    opacity:
+      1;
+
+    transform:
+
+      scale(1.12)
+      rotate(8deg);
+
+  }
+
+}
+
+
+
+/* =========================================================
+   RÓTULOS MI MAMÁ / MIS PADRINOS
+   ========================================================= */
+
+.honor-ribbon h3 {
+
+  overflow:
+    hidden;
+
+}
+
+
+.honor-ribbon h3::after {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    -40%;
+
+  left:
+    -35%;
+
+  width:
+    22%;
+
+  height:
+    180%;
+
+  transform:
+    skewX(-20deg);
+
+  pointer-events:
+    none;
+
+  background:
+
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,0.88),
+      transparent
+    );
+
+  animation:
+
+    honorRibbonShine
+    7.6s
+    ease-in-out
+    infinite;
+
+}
+
+
+.honor-block:last-of-type
+.honor-ribbon h3::after {
+
+  animation-delay:
+    1.2s;
+
+}
+
+
+@keyframes honorRibbonShine {
+
+  0%,
+  72% {
+
+    left:
+      -35%;
+
+    opacity:
+      0;
+
+  }
+
+
+  78% {
+
+    opacity:
+      0.82;
+
+  }
+
+
+  100% {
+
+    left:
+      122%;
+
+    opacity:
+      0;
+
+  }
+
+}
+
+
+
+/* =========================================================
+   PLACAS DE NOMBRES
+   ========================================================= */
+
+.honor-plaque {
+
+  --plaque-x:
+    50%;
+
+  --plaque-y:
+    28%;
+
+  transform-style:
+    preserve-3d;
+
+  transition:
+
+    transform
+    260ms
+    cubic-bezier(.2,.75,.25,1),
+
+    box-shadow
+    260ms
+    ease,
+
+    border-color
+    260ms
+    ease;
+
+}
+
+
+.honor-plaque::after {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    -72%;
+
+  left:
+    -28%;
+
+  width:
+    16%;
+
+  height:
+    240%;
+
+  pointer-events:
+    none;
+
+  transform:
+    rotate(18deg);
+
+  background:
+
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,0.64),
+      transparent
+    );
+
+  animation:
+
+    honorPlaqueSheen
+    9s
+    ease-in-out
+    infinite;
+
+}
+
+
+.honor-block:last-child
+.honor-plaque::after {
+
+  animation-delay:
+    1.35s;
+
+}
+
+
+@keyframes honorPlaqueSheen {
+
+  0%,
+  72% {
+
+    left:
+      -28%;
+
+    opacity:
+      0;
+
+  }
+
+
+  78% {
+
+    opacity:
+      0.78;
+
+  }
+
+
+  100% {
+
+    left:
+      120%;
+
+    opacity:
+      0;
+
+  }
+
+}
+
+
+.honor-plaque > * {
+
+  position:
+    relative;
+
+  z-index:
+    2;
+
+}
+
+
+
+/* =========================================================
+   BRILLO NOMBRES
+   ========================================================= */
+
+.honor-name {
+
+  isolation:
+    isolate;
+
+}
+
+
+.honor-name::after {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    -8%;
+
+  left:
+    -26%;
+
+  width:
+    14%;
+
+  height:
+    116%;
+
+  transform:
+    skewX(-18deg);
+
+  background:
+
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,0.72),
+      transparent
+    );
+
+  opacity:
+    0;
+
+  pointer-events:
+    none;
+
+  animation:
+
+    honorNameShine
+    8.2s
+    ease-in-out
+    infinite;
+
+}
+
+
+@keyframes honorNameShine {
+
+  0%,
+  74% {
+
+    left:
+      -26%;
+
+    opacity:
+      0;
+
+  }
+
+
+  80% {
+
+    opacity:
+      0.72;
+
+  }
+
+
+  100% {
+
+    left:
+      116%;
+
+    opacity:
+      0;
+
+  }
+
+}
+
+
+
+/* =========================================================
+   MONOGRAMA
+   ========================================================= */
+
+.ring-a {
+
+  animation:
+
+    familyRingOuter
+    7s
+    ease-in-out
+    infinite;
+
+}
+
+
+.ring-b {
+
+  animation:
+
+    familyRingInner
+    5.4s
+    ease-in-out
+    infinite
+    reverse;
+
+}
+
+
+.monogram-spark {
+
+  animation:
+
+    familyMonogramSpark
+    3.5s
+    ease-in-out
+    infinite;
+
+}
+
+
+.ms2 {
+
+  animation-delay:
+    1.2s;
+
+}
+
+
+@keyframes familyRingOuter {
+
+  0%,
+  100% {
+
+    transform:
+
+      scale(1)
+      rotate(0deg);
+
+    opacity:
+      0.76;
+
+  }
+
+
+  50% {
+
+    transform:
+
+      scale(1.07)
+      rotate(8deg);
+
+    opacity:
+      1;
+
+  }
+
+}
+
+
+@keyframes familyRingInner {
+
+  0%,
+  100% {
+
+    transform:
+      scale(1);
+
+  }
+
+
+  50% {
+
+    transform:
+      scale(0.96);
+
+  }
+
+}
+
+
+@keyframes familyMonogramSpark {
+
+  0%,
+  100% {
+
+    opacity:
+      0.28;
+
+    transform:
+      scale(0.84);
+
+  }
+
+
+  50% {
+
+    opacity:
+      1;
+
+    transform:
+      scale(1.18);
+
+  }
+
+}
+
+
+
+/* =========================================================
+   FIRMA
+   ========================================================= */
+
+.family-signature-name {
+
+  position:
+    relative;
+
+  display:
+    inline-block;
+
+  isolation:
+    isolate;
+
+}
+
+
+.family-signature-name::after {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    -5%;
+
+  left:
+    -25%;
+
+  width:
+    12%;
+
+  height:
+    110%;
+
+  transform:
+    skewX(-18deg);
+
+  pointer-events:
+    none;
+
+  background:
+
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,0.72),
+      transparent
+    );
+
+  animation:
+
+    familySignatureShine
+    8.8s
+    ease-in-out
+    infinite;
+
+}
+
+
+@keyframes familySignatureShine {
+
+  0%,
+  76% {
+
+    left:
+      -25%;
+
+    opacity:
+      0;
+
+  }
+
+
+  82% {
+
+    opacity:
+      0.75;
+
+  }
+
+
+  100% {
+
+    left:
+      115%;
+
+    opacity:
+      0;
+
+  }
+
+}
+
+
+
+/* =========================================================
+   HOVER ESCRITORIO
+   ========================================================= */
+
+@media (hover: hover) and (pointer: fine) {
+
+  .honor-plaque:hover {
+
+    transform:
+
+      translateY(-5px)
+      scale(1.006);
+
+    border-color:
+
+      rgba(183,85,124,0.36);
+
+    box-shadow:
+
+      0 24px 52px
+      rgba(106,38,64,0.14),
+
+      0 0 32px
+      rgba(239,145,181,0.10),
+
+      inset
+      0 0 0 1px
+      rgba(255,255,255,0.76),
+
+      inset
+      0 0 30px
+      rgba(255,255,255,0.20);
+
+  }
+
+}
+
+
+
+/* =========================================================
+   MÓVIL
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .ambient-canvas {
+
+    opacity:
+      0.72;
+
+  }
+
+
+  .invitation-card {
+
+    backdrop-filter:
+
+      blur(5px)
+      saturate(1.05);
+
+    -webkit-backdrop-filter:
+
+      blur(5px)
+      saturate(1.05);
+
+  }
+
+
+  .xv-section::after {
+
+    opacity:
+      0.18;
+
+  }
+
+
+  .princess-image::before {
+
+    opacity:
+      0.42;
+
+  }
+
+
+  .family-section::after {
+
+    opacity:
+      0.18;
+
+  }
+
+
+  .family-stage {
+
+    backdrop-filter:
+
+      blur(8px)
+      saturate(1.04);
+
+    -webkit-backdrop-filter:
+
+      blur(8px)
+      saturate(1.04);
+
+  }
+
+
+  .family-floral {
+
+    animation-duration:
+      10s;
+
+  }
+
+}
+
+
+
+/* =========================================================
+   REDUCIR MOVIMIENTO
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .xv-section::after,
+  .xv-title::after,
+  .section2-title::after,
+  .princess-image::before,
+  .phrase-card::after,
+  .family-section::after,
+  .family-floral,
+  .family-butterfly,
+  .family-star,
+  .honor-ribbon h3::after,
+  .honor-plaque::after,
+  .honor-name::after,
+  .ring-a,
+  .ring-b,
+  .monogram-spark,
+  .family-signature-name::after,
+  .frame-corner {
+
+    animation:
+      none !important;
+
+  }
+
+
+  .fx-reveal,
+  .family-reveal {
+
+    opacity:
+      1 !important;
+
+    filter:
+      none !important;
+
+    transform:
+      none !important;
+
+  }
+
+}
+
+/* =====================================================
+   SECCIÓN 03 · EFECTOS DEL MARCO FLORAL
+   ===================================================== */
+
+.family-section {
+
+  --family-x:
+    50%;
+
+  --family-y:
+    35%;
+
+}
+
+
+/* =====================================================
+   LUZ INTERACTIVA GENERAL
+   ===================================================== */
+
+.family-section::before {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 2;
+
+  pointer-events: none;
+
+  background:
+
+    radial-gradient(
+      circle
+      at var(--family-x)
+      var(--family-y),
+
+      rgba(
+        255,
+        255,
+        255,
+        0.31
+      ),
+
+      rgba(
+        255,
+        208,
+        228,
+        0.12
+      )
+      22%,
+
+      transparent
+      48%
+    );
+
+  mix-blend-mode:
+    screen;
+
+}
+
+
+/* =====================================================
+   MARCO CON PROFUNDIDAD
+   ===================================================== */
+
+.family-paper {
+
+  transition:
+
+    transform
+    260ms
+    cubic-bezier(.2,.75,.25,1),
+
+    box-shadow
+    260ms
+    ease;
+
+}
+
+
+.family-paper.fx-family-hover {
+
+  box-shadow:
+
+    0 40px 95px
+    rgba(
+      103,
+      34,
+      61,
+      0.26
+    ),
+
+    0 0 60px
+    rgba(
+      246,
+      153,
+      191,
+      0.19
+    );
+
+}
+
+
+/* =====================================================
+   BRILLO QUE RECORRE LA INVITACIÓN
+   ===================================================== */
+
+.family-paper-shine {
+
+  position: absolute;
+
+  z-index: 3;
+
+  top:
+    -20%;
+
+  left:
+    -40%;
+
+  width:
+    18%;
+
+  height:
+    145%;
+
+  pointer-events: none;
+
+  transform:
+
+    rotate(18deg)
+    skewX(-10deg);
+
+  background:
+
+    linear-gradient(
+      90deg,
+      transparent,
+
+      rgba(
+        255,
+        255,
+        255,
+        0.13
+      ),
+
+      rgba(
+        255,
+        255,
+        255,
+        0.63
+      ),
+
+      rgba(
+        255,
+        225,
+        237,
+        0.20
+      ),
+
+      transparent
+    );
+
+  filter:
+    blur(4px);
+
+  animation:
+
+    familyPaperShine
+    10s
+    ease-in-out
+    infinite;
+
+}
+
+
+@keyframes familyPaperShine {
+
+  0%,
+  69% {
+
+    left:
+      -40%;
+
+    opacity:
+      0;
+
+  }
+
+
+  74% {
+
+    opacity:
+      0.72;
+
+  }
+
+
+  100% {
+
+    left:
+      125%;
+
+    opacity:
+      0;
+
+  }
+
+}
+
+
+/* =====================================================
+   LUZ CENTRAL RESPIRA
+   ===================================================== */
+
+.family-center-glow {
+
+  animation:
+
+    familyCenterGlow
+    6s
+    ease-in-out
+    infinite;
+
+}
+
+
+@keyframes familyCenterGlow {
+
+  0%,
+  100% {
+
+    opacity:
+      0.72;
+
+    transform:
+
+      translateX(-50%)
+      scale(1);
+
+  }
+
+
+  50% {
+
+    opacity:
+      1;
+
+    transform:
+
+      translateX(-50%)
+      scale(1.045);
+
+  }
+
+}
+
+
+/* =====================================================
+   MARIPOSAS
+   ===================================================== */
+
+.family-butterfly-one {
+
+  animation:
+
+    familyButterflyOne
+    6.5s
+    ease-in-out
+    infinite;
+
+}
+
+
+.family-butterfly-two {
+
+  animation:
+
+    familyButterflyTwo
+    7.3s
+    ease-in-out
+    infinite;
+
+}
+
+
+@keyframes familyButterflyOne {
+
+  0%,
+  100% {
+
+    transform:
+
+      translate3d(0,0,0)
+      rotate(-3deg);
+
+  }
+
+
+  50% {
+
+    transform:
+
+      translate3d(-3px,-10px,0)
+      rotate(4deg);
+
+  }
+
+}
+
+
+@keyframes familyButterflyTwo {
+
+  0%,
+  100% {
+
+    transform:
+
+      translate3d(0,0,0)
+      rotate(3deg);
+
+  }
+
+
+  50% {
+
+    transform:
+
+      translate3d(4px,-8px,0)
+      rotate(-4deg);
+
+  }
+
+}
+
+
+/* =====================================================
+   DESTELLOS
+   ===================================================== */
+
+.family-spark {
+
+  animation:
+
+    familySparkTwinkle
+    3s
+    ease-in-out
+    infinite;
+
+}
+
+
+.spark-family-2 {
+
+  animation-delay:
+    0.7s;
+
+}
+
+
+.spark-family-3 {
+
+  animation-delay:
+    1.25s;
+
+}
+
+
+.spark-family-4 {
+
+  animation-delay:
+    1.8s;
+
+}
+
+
+.spark-family-5 {
+
+  animation-delay:
+    2.2s;
+
+}
+
+
+@keyframes familySparkTwinkle {
+
+  0%,
+  100% {
+
+    opacity:
+      0.15;
+
+    transform:
+      scale(0.72);
+
+  }
+
+
+  50% {
+
+    opacity:
+      1;
+
+    transform:
+      scale(1.12);
+
+  }
+
+}
+
+
+/* =====================================================
+   BRILLO EN LOS NOMBRES
+   ===================================================== */
+
+.family-name,
+.family-signature {
+
+  isolation:
+    isolate;
+
+}
+
+
+.family-name::after,
+.family-signature::after {
+
+  content: "";
+
+  position: absolute;
+
+  top:
+    -8%;
+
+  left:
+    -28%;
+
+  width:
+    14%;
+
+  height:
+    118%;
+
+  pointer-events: none;
+
+  opacity:
+    0;
+
+  transform:
+    skewX(-18deg);
+
+  background:
+
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(
+        255,
+        255,
+        255,
+        0.85
+      ),
+      transparent
+    );
+
+  animation:
+
+    familyNameShine
+    8.5s
+    ease-in-out
+    infinite;
+
+}
+
+
+.family-signature {
+
+  position: relative;
+
+  display: inline-block;
+
+}
+
+
+.family-signature::after {
+
+  animation-delay:
+    1.4s;
+
+}
+
+
+@keyframes familyNameShine {
+
+  0%,
+  75% {
+
+    left:
+      -28%;
+
+    opacity:
+      0;
+
+  }
+
+
+  81% {
+
+    opacity:
+      0.82;
+
+  }
+
+
+  100% {
+
+    left:
+      118%;
+
+    opacity:
+      0;
+
+  }
+
+}
+
+
+/* =====================================================
+   MONOGRAMA
+   ===================================================== */
+
+.family-monogram-ring.ring-one {
+
+  animation:
+
+    familyRingPulse
+    6s
+    ease-in-out
+    infinite;
+
+}
+
+
+.family-monogram-ring.ring-two {
+
+  animation:
+
+    familyRingInside
+    4.8s
+    ease-in-out
+    infinite;
+
+}
+
+
+.family-monogram-star {
+
+  animation:
+
+    familyMonogramSpark
+    3.2s
+    ease-in-out
+    infinite;
+
+}
+
+
+.monogram-star-two {
+
+  animation-delay:
+    1.1s;
+
+}
+
+
+@keyframes familyRingPulse {
+
+  0%,
+  100% {
+
+    transform:
+
+      scale(1)
+      rotate(0deg);
+
+  }
+
+
+  50% {
+
+    transform:
+
+      scale(1.06)
+      rotate(7deg);
+
+  }
+
+}
+
+
+@keyframes familyRingInside {
+
+  0%,
+  100% {
+
+    transform:
+      scale(1);
+
+  }
+
+
+  50% {
+
+    transform:
+      scale(0.95);
+
+  }
+
+}
+
+
+@keyframes familyMonogramSpark {
+
+  0%,
+  100% {
+
+    opacity:
+      0.25;
+
+    transform:
+      scale(0.8);
+
+  }
+
+
+  50% {
+
+    opacity:
+      1;
+
+    transform:
+      scale(1.18);
+
+  }
+
+}
+
+
+/* =====================================================
+   ENTRADA DEL CONTENIDO
+   ===================================================== */
+
+.family-reveal {
+
+  opacity:
+    0;
+
+  filter:
+    blur(7px);
+
+  transform:
+
+    translateY(22px)
+    scale(0.985);
+
+  transition:
+
+    opacity
+    900ms
+    cubic-bezier(.2,.75,.25,1),
+
+    transform
+    900ms
+    cubic-bezier(.2,.75,.25,1),
+
+    filter
+    900ms
+    ease;
+
+  transition-delay:
+    var(--fx-delay, 0ms);
+
+}
+
+
+.family-reveal.is-visible {
+
+  opacity:
+    1;
+
+  filter:
+    blur(0);
+
+  transform:
+
+    translateY(0)
+    scale(1);
+
+}
+
+
+/* =====================================================
+   MÓVIL
+   ===================================================== */
+
+@media (max-width: 600px) {
+
+  .family-paper {
+
+    transform:
+      none !important;
+
+  }
+
+
+  .family-paper-shine {
+
+    width:
+      22%;
+
+    opacity:
+      0.62;
+
+  }
+
+
+  .family-center-glow {
+
+    filter:
+      blur(7px);
+
+  }
+
+}
+
+
+/* =====================================================
+   ACCESIBILIDAD
+   ===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .family-paper-shine,
+  .family-center-glow,
+  .family-butterfly,
+  .family-spark,
+  .family-name::after,
+  .family-signature::after,
+  .family-monogram-ring,
+  .family-monogram-star {
+
+    animation:
+      none !important;
+
+  }
+
+
+  .family-reveal {
+
+    opacity:
+      1 !important;
+
+    filter:
+      none !important;
+
+    transform:
+      none !important;
+
+  }
+
+}
+
+/* =========================================================
+   PRUEBA DE RENDIMIENTO EN MÓVIL
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .ambient-canvas {
+    display: none !important;
+  }
+
 }
