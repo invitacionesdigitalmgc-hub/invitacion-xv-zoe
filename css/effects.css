@@ -3334,3 +3334,41 @@
   }
 
 }
+
+/* =========================================================
+   CORRECCIÓN DEFINITIVA · SECCIÓN 03 FAMILIA
+   El contenido no depende de efectos JS para visualizarse
+   ========================================================= */
+
+.family-paper-content {
+  opacity: 1 !important;
+  visibility: visible !important;
+
+  z-index: 20 !important;
+}
+
+
+.family-paper-content > .family-header,
+.family-paper-content > .family-ornate-card,
+.family-paper-content > .family-jewel-divider,
+.family-paper-content > .family-signature-area {
+  opacity: 1 !important;
+
+  visibility: visible !important;
+
+  filter: none !important;
+}
+
+
+/* Protección por si quedó alguna clase family-reveal */
+.family-section .family-reveal {
+  opacity: 1 !important;
+
+  visibility: visible !important;
+
+  filter: none !important;
+
+  transform: none !important;
+
+  transition: none !important;
+}
