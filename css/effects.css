@@ -3188,3 +3188,149 @@
   }
 
 }
+
+/* =========================================================
+   PRUEBA DE RENDIMIENTO EN MÓVIL
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .ambient-canvas {
+    display: none !important;
+  }
+
+}
+
+/* =========================================================
+   OPTIMIZACIÓN MÓVIL · CONTENIDO SIEMPRE VISIBLE
+   XV AÑOS ZOE ISHEL
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+  /* =======================================================
+     EVITAR QUE LOS REVEAL OCULTEN CONTENIDO
+     ======================================================= */
+
+  .fx-reveal,
+  .family-reveal,
+  .fx-reveal.is-visible,
+  .family-reveal.is-visible {
+
+    opacity: 1 !important;
+
+    visibility: visible !important;
+
+    filter: none !important;
+
+    transform: none !important;
+
+    transition: none !important;
+
+    transition-delay: 0ms !important;
+
+  }
+
+
+  /* =======================================================
+     PRESENTACIÓN · SECCIÓN 02
+     ======================================================= */
+
+  .section2-small,
+  .section2-title,
+  .section2-name,
+  .section2-divider,
+  .princess-area,
+  .phrase-card,
+  .section2-continue {
+
+    opacity: 1 !important;
+
+    visibility: visible !important;
+
+    filter: none !important;
+
+  }
+
+
+  /* =======================================================
+     FAMILIA · SECCIÓN 03
+     ======================================================= */
+
+  .family-reveal {
+
+    opacity: 1 !important;
+
+    visibility: visible !important;
+
+    filter: none !important;
+
+    transform: none !important;
+
+  }
+
+
+  /* =======================================================
+     EVITAR FILTROS PESADOS DURANTE EL SCROLL
+     ======================================================= */
+
+  .invitation-card,
+  .phrase-card,
+  .family-stage,
+  .timeline07-event-content {
+
+    -webkit-backdrop-filter: none !important;
+
+    backdrop-filter: none !important;
+
+  }
+
+
+  /* =======================================================
+     CANVAS DE PARTÍCULAS
+     DESACTIVADO SOLO EN CELULAR
+     ======================================================= */
+
+  .ambient-canvas {
+
+    display: none !important;
+
+  }
+
+
+  /* =======================================================
+     ITINERARIO
+     ASEGURAR QUE SUS EVENTOS SE VEAN
+     ======================================================= */
+
+  .timeline07-event {
+
+    opacity: 1 !important;
+
+    visibility: visible !important;
+
+    filter: none !important;
+
+  }
+
+
+  .timeline07-event-left,
+  .timeline07-event-right,
+  .timeline07-event.is-active {
+
+    transform: translateX(0) !important;
+
+  }
+
+
+  /* =======================================================
+     EVITAR CONTENIDO INVISIBLE POR ANIMACIONES
+     ======================================================= */
+
+  [class*="reveal"] {
+
+    visibility: visible !important;
+
+  }
+
+}
