@@ -1396,6 +1396,331 @@ button {
 
 }
 
+/* =========================================================
+   MAGIA DE APERTURA · BRILLITOS
+   ========================================================= */
+
+.opening-magic {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 28;
+
+  overflow: hidden;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   BRILLO INDIVIDUAL
+   ========================================================= */
+
+.opening-magic-spark {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width:
+    var(--spark-size, 12px);
+
+  height:
+    var(--spark-size, 12px);
+
+  margin-left:
+    calc(
+      var(--spark-size, 12px) / -2
+    );
+
+  margin-top:
+    calc(
+      var(--spark-size, 12px) / -2
+    );
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  animation:
+    openingMagicSpark
+    1.35s
+    cubic-bezier(.18,.75,.25,1)
+    forwards;
+
+  animation-delay:
+    var(--spark-delay, 0s);
+
+  filter:
+    drop-shadow(
+      0 0 7px
+      rgba(255,255,255,.96)
+    );
+}
+
+
+/* CRUZ DE LUZ */
+
+.opening-magic-spark::before,
+.opening-magic-spark::after {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius:
+    999px;
+
+  background:
+
+    linear-gradient(
+      180deg,
+      #ffffff,
+      #ffd9e7
+    );
+
+  box-shadow:
+
+    0 0 7px
+    rgba(255,255,255,1),
+
+    0 0 14px
+    rgba(255,197,220,.92),
+
+    0 0 23px
+    rgba(219,91,145,.48);
+}
+
+
+.opening-magic-spark::before {
+  width:
+    2px;
+
+  height:
+    100%;
+}
+
+
+.opening-magic-spark::after {
+  width:
+    100%;
+
+  height:
+    2px;
+}
+
+
+/* =========================================================
+   PEQUEÑO PUNTO CENTRAL
+   ========================================================= */
+
+.opening-magic-spark span {
+  position: absolute;
+
+  z-index: 2;
+
+  left: 50%;
+  top: 50%;
+
+  width:
+    4px;
+
+  height:
+    4px;
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius:
+    50%;
+
+  background:
+    #ffffff;
+
+  box-shadow:
+
+    0 0 6px
+    #ffffff,
+
+    0 0 12px
+    rgba(246,156,193,.92);
+}
+
+
+/* =========================================================
+   ANIMACIÓN
+   ========================================================= */
+
+@keyframes openingMagicSpark {
+
+  0% {
+    opacity:
+      0;
+
+    transform:
+
+      translate(
+        0,
+        0
+      )
+
+      scale(.15)
+
+      rotate(0deg);
+  }
+
+
+  15% {
+    opacity:
+      1;
+  }
+
+
+  48% {
+    opacity:
+      1;
+  }
+
+
+  100% {
+    opacity:
+      0;
+
+    transform:
+
+      translate(
+        var(--spark-x),
+        var(--spark-y)
+      )
+
+      scale(
+        var(--spark-scale, 1)
+      )
+
+      rotate(
+        var(--spark-rotation, 45deg)
+      );
+  }
+
+}
+
+
+/* =========================================================
+   DESTELLO CENTRAL ADICIONAL
+   ========================================================= */
+
+.opening-magic::after {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width:
+    40px;
+
+  height:
+    40px;
+
+  border-radius:
+    50%;
+
+  transform:
+    translate(-50%, -50%)
+    scale(.2);
+
+  opacity:
+    0;
+
+  pointer-events:
+    none;
+
+  background:
+
+    radial-gradient(
+      circle,
+      rgba(255,255,255,.98),
+      rgba(255,210,229,.64) 32%,
+      rgba(226,107,158,.20) 55%,
+      transparent 74%
+    );
+}
+
+
+.opening-magic.is-active::after {
+  animation:
+    openingCenterGlow
+    1.05s
+    ease-out
+    forwards;
+}
+
+
+@keyframes openingCenterGlow {
+
+  0% {
+    opacity:
+      0;
+
+    transform:
+      translate(-50%, -50%)
+      scale(.15);
+  }
+
+
+  32% {
+    opacity:
+      .95;
+  }
+
+
+  100% {
+    opacity:
+      0;
+
+    transform:
+      translate(-50%, -50%)
+      scale(9);
+  }
+
+}
+
+
+/* =========================================================
+   MÓVIL
+   Mantener bonito sin cargar demasiado la GPU
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .opening-magic-spark {
+    filter:
+      drop-shadow(
+        0 0 4px
+        rgba(255,255,255,.90)
+      );
+  }
+
+
+  .opening-magic-spark::before,
+  .opening-magic-spark::after {
+    box-shadow:
+
+      0 0 5px
+      rgba(255,255,255,.95),
+
+      0 0 10px
+      rgba(255,193,219,.78);
+  }
+
+}
 
 .opening-light.active {
 
