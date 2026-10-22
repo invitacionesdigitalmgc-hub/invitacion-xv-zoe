@@ -721,14 +721,18 @@ function createOpeningMagic() {
          DESACTIVAR BOTÓN
          =============================================== */
 
-      if (
-        openButton
-      ) {
+      if (openButton) {
 
-        openButton.disabled =
-          true;
+  /*
+     Quitamos el foco visual del botón
+     después de presionarlo.
+  */
 
-      }
+  openButton.blur();
+
+  openButton.disabled = true;
+
+}
 
 
       /* ===============================================
