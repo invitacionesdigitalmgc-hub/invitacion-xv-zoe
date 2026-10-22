@@ -1163,8 +1163,64 @@ button {
     box-shadow
     0.3s ease;
 
+    /* evita selección/resaltado al tocar */
+  user-select: none;
+  -webkit-user-select: none;
+
+  /* elimina el recuadro gris/azul de móvil */
+  -webkit-tap-highlight-color: transparent;
+
+  /* evita menú/contexto al mantener pulsado */
+  -webkit-touch-callout: none;
+
+  touch-action: manipulation;
+
+  outline: none;
 }
 
+/* =========================================================
+   BOTÓN ABRIR INVITACIÓN · ESTADOS
+   ========================================================= */
+
+.open-button:active {
+  outline: none;
+
+  transform:
+    scale(0.97);
+
+  box-shadow:
+    0 8px 20px rgba(120,45,76,0.18),
+    inset 0 4px 8px rgba(255,255,255,0.80),
+    inset 0 -4px 8px rgba(171,70,110,0.12);
+}
+
+
+/* No dejar aspecto gris cuando JS lo deshabilita */
+.open-button:disabled {
+  opacity: 1;
+
+  color: inherit;
+
+  cursor: default;
+
+  -webkit-text-fill-color: inherit;
+}
+
+
+/* Accesibilidad si alguien navega con teclado */
+.open-button:focus {
+  outline: none;
+}
+
+
+.open-button:focus-visible {
+  outline:
+    2px solid
+    rgba(190,75,120,0.55);
+
+  outline-offset:
+    4px;
+}
 
 .open-button:hover {
 
