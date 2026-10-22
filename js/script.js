@@ -51,6 +51,8 @@ document.addEventListener(
         "openingLight"
       );
 
+      const openingMagic =
+  document.getElementById("openingMagic");
 
     const nextContent =
       document.getElementById(
@@ -476,7 +478,227 @@ document.addEventListener(
        ABRIR INVITACIÓN
        ===================================================== */
 
-    function openInvitation() {
+    /* =========================================================
+   BRILLITOS DE APERTURA
+   ========================================================= */
+
+function createOpeningMagic() {
+
+  if (!openingMagic) {
+    return;
+  }
+
+
+  /*
+     Limpiamos cualquier brillo anterior.
+  */
+
+  openingMagic.innerHTML = "";
+
+
+  openingMagic.classList.remove(
+    "is-active"
+  );
+
+
+  void openingMagic.offsetWidth;
+
+
+  openingMagic.classList.add(
+    "is-active"
+  );
+
+
+  /*
+     Usamos pocos elementos para mantener
+     buen rendimiento en celulares.
+  */
+
+  const isMobile =
+    window.matchMedia(
+      "(max-width: 600px)"
+    ).matches;
+
+
+  const sparkCount =
+    isMobile
+      ? 13
+      : 20;
+
+
+  for (
+    let i = 0;
+    i < sparkCount;
+    i++
+  ) {
+
+    const spark =
+      document.createElement(
+        "span"
+      );
+
+
+    spark.className =
+      "opening-magic-spark";
+
+
+    /*
+       Repartimos los brillos
+       alrededor del centro.
+    */
+
+    const angle =
+      (
+        Math.PI *
+        2 *
+        i
+      ) /
+      sparkCount;
+
+
+    const variation =
+      Math.random() *
+      0.45 -
+      0.225;
+
+
+    const finalAngle =
+      angle +
+      variation;
+
+
+    const distance =
+      isMobile
+
+        ? 85 +
+          Math.random() *
+          125
+
+        : 110 +
+          Math.random() *
+          210;
+
+
+    const moveX =
+      Math.cos(
+        finalAngle
+      ) *
+      distance;
+
+
+    const moveY =
+      Math.sin(
+        finalAngle
+      ) *
+      distance;
+
+
+    const size =
+      isMobile
+
+        ? 7 +
+          Math.random() *
+          8
+
+        : 8 +
+          Math.random() *
+          11;
+
+
+    const scale =
+      0.75 +
+      Math.random() *
+      0.65;
+
+
+    const rotation =
+      Math.round(
+        Math.random() *
+        180
+      );
+
+
+    const delay =
+      Math.random() *
+      0.16;
+
+
+    spark.style.setProperty(
+      "--spark-x",
+      moveX + "px"
+    );
+
+
+    spark.style.setProperty(
+      "--spark-y",
+      moveY + "px"
+    );
+
+
+    spark.style.setProperty(
+      "--spark-size",
+      size + "px"
+    );
+
+
+    spark.style.setProperty(
+      "--spark-scale",
+      scale
+    );
+
+
+    spark.style.setProperty(
+      "--spark-rotation",
+      rotation + "deg"
+    );
+
+
+    spark.style.setProperty(
+      "--spark-delay",
+      delay + "s"
+    );
+
+
+    const center =
+      document.createElement(
+        "span"
+      );
+
+
+    spark.appendChild(
+      center
+    );
+
+
+    openingMagic.appendChild(
+      spark
+    );
+
+  }
+
+
+  /*
+     Los eliminamos una vez finalizada
+     la animación. Así no consumen recursos.
+  */
+
+  window.setTimeout(
+    function () {
+
+      openingMagic.innerHTML = "";
+
+      openingMagic.classList.remove(
+        "is-active"
+      );
+
+    },
+
+    1750
+  );
+
+}
+    
+       function openInvitation() {
 
       /*
         Evitamos abrirla dos veces.
@@ -513,17 +735,35 @@ document.addEventListener(
          SALIDA DE TARJETA
          =============================================== */
 
-      if (
-        invitationCard
-      ) {
+      if (invitationCard) {
 
-        invitationCard
-          .classList
-          .add(
-            "exit"
-          );
+  invitationCard.classList.add(
+    "exit"
+  );
 
-      }
+}
+
+
+/*
+   Ráfaga de destellos al abrir.
+*/
+
+createOpeningMagic();
+
+
+if (openingLight) {
+
+  openingLight.classList.remove(
+    "active"
+  );
+
+  void openingLight.offsetWidth;
+
+  openingLight.classList.add(
+    "active"
+  );
+
+}
 
 
       /* ===============================================
