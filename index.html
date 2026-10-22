@@ -1629,6 +1629,10 @@
           Por favor ser puntuales.
         </p>
 
+        <p class="location06-parking-note">
+  El salón cuenta con estacionamiento $$$ sin costo.
+</p>
+
 
       </div>
 
@@ -1798,7 +1802,6 @@
 
 <!-- =========================================================
      SECCIÓN 07 · ITINERARIO
-     CAMINO DE UNA NOCHE MÁGICA
      ========================================================= -->
 
 <section
@@ -1806,432 +1809,246 @@
   id="itinerarioEvento"
 >
 
-<video
-  class="timeline07-background-video"
-  autoplay
-  muted
-  loop
-  playsinline
-  preload="metadata"
-  aria-hidden="true"
->
-  <source
-    src="assets/video/fondo-itinerario.mp4" 
-    type="video/mp4"
+  <!-- VIDEO DE FONDO OPCIONAL -->
+  <video
+    class="timeline07-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
   >
-</video>
+    <source
+      src="assets/video/fondo-itinerario.mp4"
+      type="video/mp4"
+    >
+  </video>
 
-<div
-  class="timeline07-video-overlay"
-  aria-hidden="true"
-></div>
+  <div
+    class="timeline07-overlay"
+    aria-hidden="true"
+  ></div>
 
   <canvas
     class="ambient-canvas"
     aria-hidden="true"
   ></canvas>
 
-
-  <!-- =====================================================
-       FONDO DECORATIVO
-       ===================================================== -->
-
-  <div
-    class="timeline07-background-light bg-light-one"
-    aria-hidden="true"
-  ></div>
-
-  <div
-    class="timeline07-background-light bg-light-two"
-    aria-hidden="true"
-  ></div>
-
-  <div
-    class="timeline07-background-light bg-light-three"
-    aria-hidden="true"
-  ></div>
-
-
-  <!-- =====================================================
-       DESTELLOS
-       ===================================================== -->
-
-  <div
-    class="timeline07-sparkles"
-    aria-hidden="true"
-  >
-
-    <span class="timeline07-spark ts-1"></span>
-    <span class="timeline07-spark ts-2"></span>
-    <span class="timeline07-spark ts-3"></span>
-    <span class="timeline07-spark ts-4"></span>
-    <span class="timeline07-spark ts-5"></span>
-    <span class="timeline07-spark ts-6"></span>
-
-  </div>
-
-
   <main class="timeline07-content">
 
-
-    <!-- =====================================================
-         ENCABEZADO
-         ===================================================== -->
-
+    <!-- ENCABEZADO -->
     <header class="timeline07-header">
-
-      <div
-        class="timeline07-crown"
-        aria-hidden="true"
-      >
-        <i class="fa-solid fa-crown"></i>
-      </div>
-
       <p class="timeline07-kicker">
-        Una noche para recordar
+        Itinerario
       </p>
 
       <h2 class="timeline07-title">
-        El camino de
-        <span>esta noche mágica</span>
+        Los momentos más especiales
+        <span>de esta noche</span>
       </h2>
 
       <p class="timeline07-intro">
-        Cada momento será parte de una historia
-        que guardaré para siempre.
+        Cada instante ha sido pensado con mucho cariño
+        para compartir una celebración inolvidable.
       </p>
-
     </header>
 
 
-    <!-- =====================================================
-         RECORRIDO
-         ===================================================== -->
-
-    <div
-      class="timeline07-path"
-      id="timeline07Path"
-    >
-
-
-      <!-- LÍNEA BASE -->
+    <!-- LÍNEA DEL TIEMPO -->
+    <div class="timeline07-wrapper">
 
       <div
         class="timeline07-line"
         aria-hidden="true"
-      ></div>
-
-
-      <!-- LÍNEA QUE SE ILUMINA -->
-
-      <div
-        class="timeline07-line-progress"
-        id="timeline07Progress"
-        aria-hidden="true"
-      ></div>
-
-
-
-      <!-- ===================================================
-           MOMENTO 01
-           =================================================== -->
-
-      <article
-        class="timeline07-event timeline07-event-left"
       >
+        <span
+          class="timeline07-line-base"
+          id="timeline07Path"
+        ></span>
 
-        <div class="timeline07-node">
-
-          <span class="timeline07-node-aura"></span>
-
-          <span class="timeline07-diamond">
-
-            <i
-              class="fa-solid fa-gem"
-              aria-hidden="true"
-            ></i>
-
-          </span>
-
-        </div>
+        <span
+          class="timeline07-line-progress"
+          id="timeline07Progress"
+        ></span>
+      </div>
 
 
-        <div class="timeline07-event-content">
+      <div class="timeline07-events">
 
-          <span class="timeline07-time">
-            --:-- PM
-          </span>
-
-
-          <div
-            class="timeline07-icon"
-            aria-hidden="true"
-          >
-            <i class="fa-solid fa-door-open"></i>
+        <!-- 01 -->
+        <article class="timeline07-event timeline07-event-left">
+          <div class="timeline07-event-marker">
+            <span class="timeline07-diamond"></span>
           </div>
 
+          <div class="timeline07-event-content">
+            <p class="timeline07-time">
+              4:30 PM
+            </p>
 
-          <h3>
-            Actividad
-          </h3>
+            <h3 class="timeline07-event-title">
+              Entrada y agradecimiento
+            </h3>
 
+            <p class="timeline07-event-text">
+              Daremos inicio a esta noche tan especial
+              con una cálida bienvenida y unas palabras
+              de agradecimiento.
+            </p>
+          </div>
+        </article>
 
-          <p>
-            Descripción breve del momento.
-          </p>
-
-        </div>
-
-      </article>
-
-
-
-      <!-- ===================================================
-           MOMENTO 02
-           =================================================== -->
-
-      <article
-        class="timeline07-event timeline07-event-right"
-      >
-
-        <div class="timeline07-node">
-
-          <span class="timeline07-node-aura"></span>
-
-          <span class="timeline07-diamond">
-
-            <i
-              class="fa-solid fa-gem"
-              aria-hidden="true"
-            ></i>
-
-          </span>
-
-        </div>
-
-
-        <div class="timeline07-event-content">
-
-          <span class="timeline07-time">
-            --:-- PM
-          </span>
-
-
-          <div
-            class="timeline07-icon"
-            aria-hidden="true"
-          >
-            <i class="fa-solid fa-wand-magic-sparkles"></i>
+        <!-- 02 -->
+        <article class="timeline07-event timeline07-event-right">
+          <div class="timeline07-event-marker">
+            <span class="timeline07-diamond"></span>
           </div>
 
+          <div class="timeline07-event-content">
+            <p class="timeline07-time">
+              5:00 PM – 8:00 PM
+            </p>
 
-          <h3>
-            Actividad
-          </h3>
+            <h3 class="timeline07-event-title">
+              Grupo musical y baile
+            </h3>
 
+            <p class="timeline07-event-text">
+              Disfrutaremos de música en vivo
+              y de una tarde llena de alegría,
+              ritmo y baile.
+            </p>
+          </div>
+        </article>
 
-          <p>
-            Descripción breve del momento.
-          </p>
-
-        </div>
-
-      </article>
-
-
-
-      <!-- ===================================================
-           MOMENTO 03
-           =================================================== -->
-
-      <article
-        class="timeline07-event timeline07-event-left"
-      >
-
-        <div class="timeline07-node">
-
-          <span class="timeline07-node-aura"></span>
-
-          <span class="timeline07-diamond">
-
-            <i
-              class="fa-solid fa-gem"
-              aria-hidden="true"
-            ></i>
-
-          </span>
-
-        </div>
-
-
-        <div class="timeline07-event-content">
-
-          <span class="timeline07-time">
-            --:-- PM
-          </span>
-
-
-          <div
-            class="timeline07-icon"
-            aria-hidden="true"
-          >
-            <i class="fa-solid fa-utensils"></i>
+        <!-- 03 -->
+        <article class="timeline07-event timeline07-event-left">
+          <div class="timeline07-event-marker">
+            <span class="timeline07-diamond"></span>
           </div>
 
+          <div class="timeline07-event-content">
+            <p class="timeline07-time">
+              5:30 PM
+            </p>
 
-          <h3>
-            Actividad
-          </h3>
+            <h3 class="timeline07-event-title">
+              Barra de snacks
+            </h3>
 
+            <p class="timeline07-event-text">
+              Un delicioso espacio para disfrutar
+              botanas y compartir un momento agradable.
+            </p>
+          </div>
+        </article>
 
-          <p>
-            Descripción breve del momento.
-          </p>
-
-        </div>
-
-      </article>
-
-
-
-      <!-- ===================================================
-           MOMENTO 04
-           =================================================== -->
-
-      <article
-        class="timeline07-event timeline07-event-right"
-      >
-
-        <div class="timeline07-node">
-
-          <span class="timeline07-node-aura"></span>
-
-          <span class="timeline07-diamond">
-
-            <i
-              class="fa-solid fa-gem"
-              aria-hidden="true"
-            ></i>
-
-          </span>
-
-        </div>
-
-
-        <div class="timeline07-event-content">
-
-          <span class="timeline07-time">
-            --:-- PM
-          </span>
-
-
-          <div
-            class="timeline07-icon"
-            aria-hidden="true"
-          >
-            <i class="fa-solid fa-music"></i>
+        <!-- 04 -->
+        <article class="timeline07-event timeline07-event-right">
+          <div class="timeline07-event-marker">
+            <span class="timeline07-diamond"></span>
           </div>
 
+          <div class="timeline07-event-content">
+            <p class="timeline07-time">
+              7:30 PM
+            </p>
 
-          <h3>
-            Actividad
-          </h3>
+            <h3 class="timeline07-event-title">
+              Cena principal
+            </h3>
 
+            <p class="timeline07-event-text">
+              Compartiremos juntos una cena especial
+              preparada para esta celebración.
+            </p>
+          </div>
+        </article>
 
-          <p>
-            Descripción breve del momento.
-          </p>
-
-        </div>
-
-      </article>
-
-
-
-      <!-- ===================================================
-           MOMENTO 05
-           =================================================== -->
-
-      <article
-        class="timeline07-event timeline07-event-left"
-      >
-
-        <div class="timeline07-node">
-
-          <span class="timeline07-node-aura"></span>
-
-          <span class="timeline07-diamond">
-
-            <i
-              class="fa-solid fa-gem"
-              aria-hidden="true"
-            ></i>
-
-          </span>
-
-        </div>
-
-
-        <div class="timeline07-event-content">
-
-          <span class="timeline07-time">
-            --:-- PM
-          </span>
-
-
-          <div
-            class="timeline07-icon"
-            aria-hidden="true"
-          >
-            <i class="fa-solid fa-cake-candles"></i>
+        <!-- 05 -->
+        <article class="timeline07-event timeline07-event-left">
+          <div class="timeline07-event-marker">
+            <span class="timeline07-diamond"></span>
           </div>
 
+          <div class="timeline07-event-content">
+            <p class="timeline07-time">
+              9:00 PM
+            </p>
 
-          <h3>
-            Actividad
-          </h3>
+            <h3 class="timeline07-event-title">
+              Vals
+            </h3>
 
+            <p class="timeline07-event-text">
+              Uno de los momentos más emotivos
+              e inolvidables de la noche.
+            </p>
+          </div>
+        </article>
 
-          <p>
-            Descripción breve del momento.
-          </p>
+        <!-- 06 -->
+        <article class="timeline07-event timeline07-event-right">
+          <div class="timeline07-event-marker">
+            <span class="timeline07-diamond"></span>
+          </div>
 
-        </div>
+          <div class="timeline07-event-content">
+            <p class="timeline07-time">
+              11:00 PM
+            </p>
 
-      </article>
+            <h3 class="timeline07-event-title">
+              Show sorpresa
+            </h3>
 
+            <p class="timeline07-event-text">
+              Un momento preparado con mucha ilusión
+              para sorprender a todos los invitados.
+            </p>
+          </div>
+        </article>
 
+        <!-- 07 -->
+        <article class="timeline07-event timeline07-event-left">
+          <div class="timeline07-event-marker">
+            <span class="timeline07-diamond"></span>
+          </div>
+
+          <div class="timeline07-event-content">
+            <p class="timeline07-time">
+              2:00 AM
+            </p>
+
+            <h3 class="timeline07-event-title">
+              Término del evento
+            </h3>
+
+            <p class="timeline07-event-text">
+              Gracias por acompañarme en esta noche
+              tan especial y ser parte de este recuerdo.
+            </p>
+          </div>
+        </article>
+
+      </div>
     </div>
 
 
-    <!-- =====================================================
-         CIERRE
-         ===================================================== -->
-
+    <!-- CIERRE -->
     <div class="timeline07-closing">
-
-      <span
-        class="timeline07-closing-gem"
-        aria-hidden="true"
-      >
-        <i class="fa-solid fa-gem"></i>
-      </span>
-
-      <p class="timeline07-closing-small">
-        Cada instante cuenta
-      </p>
-
       <p class="timeline07-closing-script">
-        Vive conmigo cada momento
+        Una noche pensada con amor
       </p>
 
+      <p class="timeline07-closing-text">
+        Gracias por acompañarme en cada momento
+        de esta celebración inolvidable.
+      </p>
     </div>
 
 
-    <!-- =====================================================
-         CONTINUAR
-         ===================================================== -->
-
+    <!-- CONTINUAR -->
     <div
       class="timeline07-continue"
       id="timelineContinue"
@@ -2239,15 +2056,12 @@
       tabindex="0"
       aria-label="Continuar a la siguiente sección"
     >
-
       <span>
         Continúa
       </span>
 
       <span class="scroll-arrow"></span>
-
     </div>
-
 
   </main>
 
