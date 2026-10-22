@@ -6062,10 +6062,11 @@ button {
 
 /* =========================================================
    SECCIÓN 04 · MENSAJE ESPECIAL
-   FONDO-MENSAJE + MARCO-MENSAJE
+   XV AÑOS · ZOE ISHEL
+   VERSIÓN FINAL
    ========================================================= */
 
-.message-section {
+.message04-section {
   position: relative;
   isolation: isolate;
 
@@ -6073,242 +6074,573 @@ button {
   min-height: 100vh;
 
   padding:
-    48px
-    8px
-    58px;
+    82px
+    20px
+    72px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
 
   overflow: hidden;
 
   background:
+
     radial-gradient(
-      circle at 50% 30%,
-      rgba(255,255,255,0.82),
+      circle at 50% 12%,
+      rgba(255,255,255,.96),
+      rgba(255,245,249,.70) 30%,
+      transparent 52%
+    ),
+
+    radial-gradient(
+      circle at 10% 48%,
+      rgba(244,170,200,.19),
+      transparent 38%
+    ),
+
+    radial-gradient(
+      circle at 90% 68%,
+      rgba(215,95,146,.13),
       transparent 42%
     ),
+
     linear-gradient(
       180deg,
-      #efc1d2 0%,
-      #f8dce7 26%,
-      #fff8fb 52%,
-      #f8dce8 78%,
-      #efbfd0 100%
+      #efc6d6 0%,
+      #f9e4ec 23%,
+      #fff9fb 49%,
+      #f9e3ec 74%,
+      #edbfd1 100%
     );
 }
 
 
-/* =====================================================
-   LUCES SUAVES
-   ===================================================== */
+/* =========================================================
+   TEXTURA MUY SUAVE
+   ========================================================= */
 
-.message-light {
+.message04-section::before {
+  content: "";
+
   position: absolute;
-  border-radius: 50%;
+
+  inset: 0;
+
+  z-index: 0;
+
   pointer-events: none;
-  filter: blur(50px);
+
+  opacity: .38;
+
+  background:
+
+    radial-gradient(
+      circle at 18% 18%,
+      rgba(255,255,255,.95)
+      0 1.5px,
+      transparent 2.5px
+    ),
+
+    radial-gradient(
+      circle at 82% 29%,
+      rgba(255,255,255,.80)
+      0 1px,
+      transparent 2px
+    ),
+
+    radial-gradient(
+      circle at 31% 72%,
+      rgba(255,255,255,.65)
+      0 1px,
+      transparent 2px
+    );
+
+  background-size:
+    170px 180px,
+    190px 210px,
+    230px 190px;
 }
 
-.message-light-one {
-  width: 320px;
-  height: 320px;
-  top: 20px;
-  left: -120px;
-  background: rgba(248,180,208,0.22);
+
+/* =========================================================
+   LUCES
+   ========================================================= */
+
+.message04-aura {
+  position: absolute;
+
+  z-index: 1;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  filter:
+    blur(48px);
 }
 
-.message-light-two {
-  width: 360px;
-  height: 360px;
-  right: -120px;
-  bottom: -60px;
-  background: rgba(224,110,160,0.10);
+
+.message04-aura-one {
+  width: 350px;
+  height: 350px;
+
+  top: -80px;
+  left: -130px;
+
+  background:
+    rgba(255,187,214,.27);
 }
 
 
-/* =====================================================
-   CONTENEDOR GENERAL
-   ===================================================== */
+.message04-aura-two {
+  width: 430px;
+  height: 430px;
 
-.message-wrapper {
+  right: -170px;
+  bottom: -120px;
+
+  background:
+    rgba(205,73,130,.12);
+}
+
+
+/* =========================================================
+   CONTENIDO
+   ========================================================= */
+
+.message04-shell {
   position: relative;
-  z-index: 4;
 
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-
-/* =====================================================
-   ESCENARIO PRINCIPAL
-   ===================================================== */
-
-.message-scene {
-  position: relative;
+  z-index: 5;
 
   width:
     min(
-      95vw,
-      420px
+      100%,
+      760px
     );
 
-  aspect-ratio:
-    736 / 1600;
+  display: flex;
 
-  margin:
-    0 auto;
+  flex-direction: column;
 
-  overflow: hidden;
-
-  border-radius: 20px;
-
-  background:
-    rgba(255,255,255,0.55);
-
-  box-shadow:
-    0 20px 50px rgba(110,40,68,0.12),
-    0 0 30px rgba(255,210,228,0.16);
-}
-
-
-.message-scene-bg {
-  position: absolute;
-  inset: 0;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: cover;
-  object-position: center;
-
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-drag: none;
-}
-
-
-.message-scene-overlay {
-  position: absolute;
-  inset: 0;
-
-  background:
-    radial-gradient(
-      circle at 58% 42%,
-      rgba(255,255,255,0.18),
-      transparent 30%
-    );
-
-  pointer-events: none;
-}
-
-
-/* =====================================================
-   DESTELLOS
-   ===================================================== */
-
-.message-scene-sparkles {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  pointer-events: none;
-}
-
-.message-scene-spark {
-  position: absolute;
-
-  width: 5px;
-  height: 5px;
-
-  border-radius: 50%;
-  background: #ffffff;
-
-  box-shadow:
-    0 0 6px rgba(255,255,255,1),
-    0 0 15px rgba(255,205,229,0.92),
-    0 0 24px rgba(223,94,151,0.42);
-
-  animation:
-    messageSparkTwinkle 3s ease-in-out infinite;
-}
-
-.message-scene-spark::before,
-.message-scene-spark::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  background: rgba(255,255,255,0.92);
-  transform: translate(-50%, -50%);
-}
-
-.message-scene-spark::before {
-  width: 1px;
-  height: 14px;
-}
-
-.message-scene-spark::after {
-  width: 14px;
-  height: 1px;
-}
-
-.spark-a {
-  top: 18%;
-  right: 18%;
-}
-
-.spark-b {
-  top: 42%;
-  right: 24%;
-  animation-delay: .7s;
-}
-
-.spark-c {
-  top: 63%;
-  right: 18%;
-  animation-delay: 1.2s;
-}
-
-.spark-d {
-  bottom: 15%;
-  left: 35%;
-  animation-delay: 1.8s;
-}
-
-@keyframes messageSparkTwinkle {
-  0%, 100% {
-    opacity: .2;
-    transform: scale(.75);
-  }
-
-  50% {
-    opacity: 1;
-    transform: scale(1.12);
-  }
-}
-
-
-/* =====================================================
-   ENCABEZADO SOBRE EL FONDO
-   ===================================================== */
-
-.message-scene-header {
-  position: absolute;
-  z-index: 5;
-
-  top: 43%;
-  left: 58%;
-
-  width: 48%;
-
-  transform: translateX(-50%);
+  align-items: center;
 
   text-align: center;
 }
 
 
-.message-kicker {
-  margin-bottom: 4px;
+/* =========================================================
+   ENCABEZADO
+   ========================================================= */
+
+.message04-header {
+  width:
+    min(
+      100%,
+      640px
+    );
+
+  margin-bottom:
+    34px;
+}
+
+
+.message04-crown {
+  margin:
+    0
+    auto
+    9px;
+
+  font-size:
+    22px;
+
+  color:
+    #c15c84;
+
+  text-shadow:
+
+    0 0 8px
+    rgba(255,255,255,.98),
+
+    0 0 18px
+    rgba(220,92,145,.30);
+}
+
+
+.message04-kicker {
+  margin-bottom:
+    7px;
+
+  font-family:
+    "Cinzel",
+    serif;
+
+  font-size:
+    9px;
+
+  font-weight:
+    600;
+
+  letter-spacing:
+    4px;
+
+  text-transform:
+    uppercase;
+
+  color:
+    #8e5068;
+}
+
+
+.message04-title {
+  margin: 0;
+
+  font-family:
+    "Cormorant Garamond",
+    serif;
+
+  font-size:
+    clamp(
+      38px,
+      6vw,
+      58px
+    );
+
+  font-weight:
+    600;
+
+  line-height:
+    .96;
+
+  color:
+    #623846;
+
+  text-shadow:
+    0 1px 0
+    rgba(255,255,255,.96);
+}
+
+
+.message04-title span {
+  display: block;
+
+  margin-top:
+    4px;
+
+  font-family:
+    "Great Vibes",
+    cursive;
+
+  font-size:
+    1.18em;
+
+  font-weight:
+    400;
+
+  line-height:
+    .98;
+
+  color:
+    #b94070;
+
+  text-shadow:
+
+    0 1px 0
+    rgba(255,255,255,.95),
+
+    0 0 14px
+    rgba(255,205,224,.40);
+}
+
+
+/* =========================================================
+   ORNAMENTO DEL TÍTULO
+   ========================================================= */
+
+.message04-title-ornament {
+  width:
+    min(
+      75%,
+      300px
+    );
+
+  margin:
+    18px
+    auto
+    0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap:
+    11px;
+
+  color:
+    #bd6687;
+}
+
+
+.message04-title-ornament span {
+  flex: 1;
+
+  height: 1px;
+
+  background:
+
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(189,91,131,.58)
+    );
+}
+
+
+.message04-title-ornament span:last-child {
+  transform:
+    rotate(180deg);
+}
+
+
+.message04-title-ornament i {
+  font-size:
+    12px;
+
+  filter:
+    drop-shadow(
+      0 0 6px
+      rgba(255,255,255,.95)
+    );
+}
+
+
+/* =========================================================
+   ESCENA CENTRAL
+   ========================================================= */
+
+.message04-stage {
+  position: relative;
+
+  width:
+    min(
+      100%,
+      540px
+    );
+
+  padding:
+    20px
+    16px
+    30px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  isolation: isolate;
+}
+
+
+/* =========================================================
+   ARCO EXTERIOR
+   ========================================================= */
+
+.message04-arch {
+  position: absolute;
+
+  z-index: -1;
+
+  inset:
+    2%
+    2%
+    0;
+
+  border:
+
+    1px solid
+    rgba(194,100,136,.28);
+
+  border-radius:
+
+    48%
+    48%
+    22px
+    22px
+
+    /
+
+    13%
+    13%
+    4%
+    4%;
+
+  box-shadow:
+
+    inset
+    0 0 0 5px
+    rgba(255,255,255,.24),
+
+    0 20px 48px
+    rgba(105,37,62,.08);
+
+  pointer-events:
+    none;
+}
+
+
+.message04-arch::before {
+  content: "";
+
+  position: absolute;
+
+  inset:
+    8px;
+
+  border:
+
+    1px solid
+    rgba(233,171,194,.32);
+
+  border-radius:
+    inherit;
+}
+
+
+/* =========================================================
+   HALO
+   ========================================================= */
+
+.message04-halo {
+  position: absolute;
+
+  z-index: -2;
+
+  top: 12%;
+  left: 50%;
+
+  width: 84%;
+  height: 66%;
+
+  transform:
+    translateX(-50%);
+
+  border-radius:
+    50%;
+
+  background:
+
+    radial-gradient(
+      ellipse,
+      rgba(255,255,255,.92),
+      rgba(255,247,250,.58) 42%,
+      rgba(249,210,226,.18) 67%,
+      transparent 80%
+    );
+
+  filter:
+    blur(14px);
+
+  pointer-events:
+    none;
+}
+
+
+/* =========================================================
+   MARCO DEL MENSAJE
+   ========================================================= */
+
+.message04-frame-wrap {
+  position: relative;
+
+  z-index: 5;
+
+  width:
+    min(
+      100%,
+      470px
+    );
+
+  margin:
+    0
+    auto;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+
+.message04-frame-image {
+  position: relative;
+
+  z-index: 1;
+
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  object-fit: contain;
+
+  pointer-events: none;
+
+  user-select: none;
+
+  -webkit-user-drag: none;
+
+  filter:
+
+    drop-shadow(
+      0 16px 24px
+      rgba(113,43,70,.16)
+    )
+
+    drop-shadow(
+      0 0 12px
+      rgba(255,255,255,.40)
+    );
+}
+
+
+/* =========================================================
+   TEXTO DENTRO DEL MARCO
+   ========================================================= */
+
+.message04-frame-text {
+  position: absolute;
+
+  z-index: 4;
+
+  top: 12%;
+  left: 11.5%;
+
+  width: 77%;
+  height: 76%;
+
+  padding:
+    9px
+    13px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+
+.message04-inside-top {
+  margin-bottom:
+    8px;
 
   font-family:
     "Cinzel",
@@ -6317,165 +6649,397 @@ button {
   font-size:
     clamp(
       8px,
-      1.7vw,
-      11px
+      1.4vw,
+      10px
     );
 
-  font-weight: 600;
+  font-weight:
+    600;
 
-  letter-spacing: 2.2px;
-  text-transform: uppercase;
+  line-height:
+    1.35;
 
-  color: #925168;
+  letter-spacing:
+    2.1px;
 
-  text-shadow:
-    0 1px 0 rgba(255,255,255,0.92);
+  text-transform:
+    uppercase;
+
+  color:
+    #9c5772;
 }
 
 
-.message-mini-divider {
-  width: 70%;
+.message04-quote-mark {
+  height:
+    31px;
 
-  margin:
-    0 auto;
+  margin-bottom:
+    1px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
+  font-family:
+    "Cormorant Garamond",
+    serif;
 
-  color: #c06a8b;
-}
+  font-size:
+    46px;
 
-.message-mini-divider span {
-  flex: 1;
-  height: 1px;
+  line-height:
+    1;
 
-  background:
-    linear-gradient(
-      90deg,
-      transparent,
-      rgba(188,98,134,0.48)
-    );
-}
-
-.message-mini-divider span:last-child {
-  transform: rotate(180deg);
-}
-
-.message-mini-divider b {
-  font-weight: 400;
-  font-size: 10px;
+  color:
+    #d89bb4;
 }
 
 
-/* =====================================================
-   MARCO DEL MENSAJE
-   ===================================================== */
-
-.message-note {
-  position: absolute;
-  z-index: 6;
-
-  top: 55%;
-  left: 58%;
-
-  width:
-    clamp(
-      220px,
-      63%,
-      300px
-    );
-
-  transform:
-    translate(-50%, -50%);
-}
-
-
-.message-note-frame {
-  display: block;
+.message04-main-text {
   width: 100%;
-  height: auto;
 
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-drag: none;
+  margin: 0;
 
-  filter:
-    drop-shadow(0 10px 24px rgba(111,43,69,0.14))
-    drop-shadow(0 0 12px rgba(255,255,255,0.28));
-}
-
-
-.message-note-content {
-  position: absolute;
-
-  top: 21%;
-  left: 16%;
-  right: 16%;
-  bottom: 18%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  text-align: center;
-}
-
-
-.message-quote {
   font-family:
     "Cormorant Garamond",
     serif;
 
   font-size:
     clamp(
-      12px,
-      2vw,
-      16px
+      16px,
+      2.3vw,
+      20px
     );
 
-  font-weight: 500;
+  font-weight:
+    500;
 
-  line-height: 1.33;
+  font-style:
+    italic;
 
-  color: #6a4051;
+  line-height:
+    1.37;
 
-  text-wrap: balance;
+  color:
+    #694451;
+
+  text-wrap:
+    balance;
 
   text-shadow:
-    0 1px 0 rgba(255,255,255,0.85);
+    0 1px 0
+    rgba(255,255,255,.85);
 }
 
 
-.message-quote strong {
-  color: #ac4570;
-  font-weight: 700;
+.message04-main-text strong {
+  color:
+    #bd3e72;
+
+  font-weight:
+    700;
 }
 
 
-.message-break {
-  display: block;
-  height: 10px;
+.message04-second {
+  margin-top:
+    8px;
 }
 
 
-/* =====================================================
-   TEXTO ¡MIS XV AÑOS! SOBRE EL FONDO
-   ===================================================== */
+/* =========================================================
+   DIVISOR INTERIOR
+   ========================================================= */
 
-.message-scene-xv {
+.message04-mini-ornament {
+  width:
+    76%;
+
+  margin:
+    10px
+    auto
+    4px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap:
+    7px;
+
+  color:
+    #c26488;
+}
+
+
+.message04-mini-ornament span {
+  flex: 1;
+
+  height:
+    1px;
+
+  background:
+
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(193,98,136,.47)
+    );
+}
+
+
+.message04-mini-ornament span:last-child {
+  transform:
+    rotate(180deg);
+}
+
+
+.message04-mini-ornament b {
+  font-size:
+    9px;
+
+  font-weight:
+    400;
+}
+
+
+.message04-inside-bottom {
+  margin-top:
+    9px;
+
+  font-family:
+    "Cinzel",
+    serif;
+
+  font-size:
+    8px;
+
+  font-weight:
+    600;
+
+  letter-spacing:
+    2.5px;
+
+  text-transform:
+    uppercase;
+
+  color:
+    #9e5572;
+}
+
+
+/* =========================================================
+   JOYA XV
+   ========================================================= */
+
+.message04-bottom-jewel {
+  position: relative;
+
+  z-index: 6;
+
+  width:
+    min(
+      62%,
+      260px
+    );
+
+  margin-top:
+    -8px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap:
+    9px;
+}
+
+
+.message04-bottom-jewel > span {
+  flex: 1;
+
+  height:
+    1px;
+
+  background:
+
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(184,76,119,.42)
+    );
+}
+
+
+.message04-bottom-jewel > span:last-child {
+  transform:
+    rotate(180deg);
+}
+
+
+.message04-bottom-jewel div {
+  width:
+    42px;
+  height:
+    42px;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius:
+    50%;
+
+  border:
+
+    1px solid
+    rgba(188,82,124,.30);
+
+  background:
+
+    radial-gradient(
+      circle at 35% 25%,
+      #ffffff,
+      #fff8fb 32%,
+      #f0bfd2 70%,
+      #ca7094
+    );
+
+  box-shadow:
+
+    0 7px 15px
+    rgba(96,31,56,.12),
+
+    0 0 12px
+    rgba(255,255,255,.92);
+
+  font-family:
+    "Cinzel Decorative",
+    serif;
+
+  font-size:
+    11px;
+
+  font-weight:
+    700;
+
+  color:
+    #a63d68;
+}
+
+
+/* =========================================================
+   PERLAS
+   ========================================================= */
+
+.message04-pearl {
   position: absolute;
-  z-index: 5;
 
-  left: 58%;
-  bottom: 17%;
+  z-index: 8;
 
-  width: 48%;
+  width:
+    10px;
 
-  transform: translateX(-50%);
+  height:
+    10px;
 
-  text-align: center;
+  border-radius:
+    50%;
+
+  pointer-events:
+    none;
+
+  background:
+
+    radial-gradient(
+      circle at 30% 25%,
+      #ffffff,
+      #fff9fc 30%,
+      #ebc4d4 66%,
+      #c67c9a
+    );
+
+  box-shadow:
+
+    0 0 5px
+    rgba(255,255,255,.96),
+
+    0 0 11px
+    rgba(218,113,155,.27);
+}
+
+
+.message04-pearl-1 {
+  top: 11%;
+  left: 5%;
+}
+
+
+.message04-pearl-2 {
+  top: 11%;
+  right: 5%;
+}
+
+
+.message04-pearl-3 {
+  bottom: 12%;
+  left: 4%;
+}
+
+
+.message04-pearl-4 {
+  right: 4%;
+  bottom: 12%;
+}
+
+
+/* =========================================================
+   FIRMA
+   ========================================================= */
+
+.message04-signature {
+  width:
+    min(
+      94%,
+      530px
+    );
+
+  margin-top:
+    25px;
+}
+
+
+.message04-signature-small {
+  margin-bottom:
+    2px;
+
+  font-family:
+    "Cinzel",
+    serif;
+
+  font-size:
+    8px;
+
+  font-weight:
+    600;
+
+  letter-spacing:
+    3px;
+
+  text-transform:
+    uppercase;
+
+  color:
+    #905168;
+}
+
+
+.message04-name {
+  margin: 0;
+
+  padding:
+    3px
+    6px
+    5px;
 
   font-family:
     "Great Vibes",
@@ -6483,45 +7047,93 @@ button {
 
   font-size:
     clamp(
-      28px,
-      5vw,
-      40px
+      54px,
+      9vw,
+      78px
     );
 
-  line-height: 1.05;
+  font-weight:
+    400;
 
-  background:
-    linear-gradient(
-      180deg,
-      #fff6fb 0%,
-      #ea88ac 25%,
-      #b63e6d 57%,
-      #7d2348 100%
-    );
+  line-height:
+    1;
 
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color:
+    #b43a6c;
 
-  filter:
-    drop-shadow(0 3px 8px rgba(110,38,66,0.14));
+  text-shadow:
+
+    0 1px 0
+    rgba(255,255,255,.95),
+
+    0 0 15px
+    rgba(255,198,220,.48);
 }
 
 
-/* =====================================================
-   TEXTO INFERIOR
-   ===================================================== */
-
-.message-closing {
-  margin-top: 20px;
-
+.message04-signature-divider {
   width:
     min(
-      92%,
-      520px
+      65%,
+      280px
     );
 
-  text-align: center;
+  margin:
+    4px
+    auto
+    10px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap:
+    8px;
+
+  color:
+    #bd6285;
+}
+
+
+.message04-signature-divider span {
+  flex: 1;
+
+  height:
+    1px;
+
+  background:
+
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(186,80,122,.44)
+    );
+}
+
+
+.message04-signature-divider span:last-child {
+  transform:
+    rotate(180deg);
+}
+
+
+.message04-signature-divider i {
+  font-size:
+    9px;
+}
+
+
+.message04-closing {
+  width:
+    min(
+      95%,
+      480px
+    );
+
+  margin:
+    0
+    auto;
 
   font-family:
     "Cormorant Garamond",
@@ -6529,793 +7141,581 @@ button {
 
   font-size:
     clamp(
-      15px,
-      3vw,
+      16px,
+      2.4vw,
       20px
     );
 
-  font-weight: 500;
-  font-style: italic;
-  line-height: 1.35;
+  font-weight:
+    600;
 
-  color: #7a4d60;
+  font-style:
+    italic;
+
+  line-height:
+    1.42;
+
+  color:
+    #764a5b;
+
+  text-wrap:
+    balance;
 }
 
 
-.message-continue {
-  margin-top: 18px;
+/* =========================================================
+   CONTINUAR
+   ========================================================= */
+
+.message04-continue {
+  margin-top:
+    28px;
 
   display: flex;
+
   flex-direction: column;
+
   align-items: center;
-  gap: 7px;
 
-  cursor: pointer;
+  gap:
+    8px;
 
-  color: #92566e;
+  cursor:
+    pointer;
+
+  user-select:
+    none;
+
+  color:
+    #9d5772;
 }
 
-.message-continue > span:first-child {
-  font-size: 8px;
-  font-weight: 600;
-  letter-spacing: 3px;
-  text-transform: uppercase;
+
+.message04-continue > span:first-child {
+  font-family:
+    "Cinzel",
+    serif;
+
+  font-size:
+    8px;
+
+  font-weight:
+    600;
+
+  letter-spacing:
+    3px;
+
+  text-transform:
+    uppercase;
 }
 
 
-/* =====================================================
-   REVEAL
-   ===================================================== */
+/* =========================================================
+   DESTELLOS
+   ========================================================= */
 
-.message-reveal {
-  opacity: 0;
-  filter: blur(8px);
+.message04-sparkles {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 4;
+
+  pointer-events:
+    none;
+}
+
+
+.message04-spark {
+  position: absolute;
+
+  width:
+    4px;
+
+  height:
+    4px;
+
+  border-radius:
+    50%;
+
+  background:
+    #ffffff;
+
+  box-shadow:
+
+    0 0 5px
+    #ffffff,
+
+    0 0 12px
+    rgba(255,196,220,.92),
+
+    0 0 22px
+    rgba(211,76,132,.38);
+
+  animation:
+
+    message04Spark
+    3.3s
+    ease-in-out
+    infinite;
+}
+
+
+.message04-spark::before,
+.message04-spark::after {
+  content: "";
+
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  background:
+    rgba(255,255,255,.95);
 
   transform:
-    translateY(24px)
-    scale(.985);
-
-  transition:
-    opacity 900ms cubic-bezier(.2,.75,.25,1),
-    transform 900ms cubic-bezier(.2,.75,.25,1),
-    filter 900ms ease;
-
-  transition-delay:
-    var(--message-delay, 0ms);
-}
-
-.message-reveal.is-visible {
-  opacity: 1;
-  filter: blur(0);
-
-  transform:
-    translateY(0)
-    scale(1);
+    translate(-50%, -50%);
 }
 
 
-/* =====================================================
+.message04-spark::before {
+  width:
+    1px;
+
+  height:
+    15px;
+}
+
+
+.message04-spark::after {
+  width:
+    15px;
+
+  height:
+    1px;
+}
+
+
+.message04-spark-1 {
+  top: 15%;
+  left: 11%;
+}
+
+
+.message04-spark-2 {
+  top: 29%;
+  right: 12%;
+
+  animation-delay:
+    .7s;
+}
+
+
+.message04-spark-3 {
+  top: 53%;
+  left: 8%;
+
+  animation-delay:
+    1.3s;
+}
+
+
+.message04-spark-4 {
+  right: 9%;
+  bottom: 27%;
+
+  animation-delay:
+    1.9s;
+}
+
+
+.message04-spark-5 {
+  bottom: 11%;
+  left: 17%;
+
+  animation-delay:
+    2.4s;
+}
+
+
+@keyframes message04Spark {
+
+  0%,
+  100% {
+    opacity:
+      .18;
+
+    transform:
+      scale(.72);
+  }
+
+  50% {
+    opacity:
+      1;
+
+    transform:
+      scale(1.12);
+  }
+
+}
+
+
+/* =========================================================
    TABLET
-   ===================================================== */
+   ========================================================= */
 
-@media (min-width: 601px) {
+@media (max-width: 768px) {
 
-  .message-scene {
+  .message04-section {
+    padding:
+      66px
+      16px
+      60px;
+  }
+
+
+  .message04-header {
+    margin-bottom:
+      27px;
+  }
+
+
+  .message04-stage {
     width:
       min(
-        92vw,
+        100%,
         470px
       );
   }
 
-  .message-scene-header {
-    top: 43%;
-  }
 
-  .message-note {
-    top: 55%;
+  .message04-frame-wrap {
     width:
-      clamp(
-        250px,
-        58%,
-        330px
+      min(
+        100%,
+        430px
       );
-  }
-
-  .message-quote {
-    font-size:
-      clamp(
-        13px,
-        1.65vw,
-        17px
-      );
-  }
-
-  .message-scene-xv {
-    bottom: 18%;
   }
 
 }
 
 
-/* =====================================================
+/* =========================================================
    MÓVIL
-   ===================================================== */
+   ========================================================= */
 
 @media (max-width: 600px) {
 
-  .message-section {
-    min-height: auto;
+  .message04-section {
+    min-height:
+      auto;
 
     padding:
-      34px
-      4px
-      46px;
+      54px
+      10px
+      52px;
   }
 
-  .message-scene {
+
+  .message04-header {
+    width:
+      94%;
+
+    margin-bottom:
+      22px;
+  }
+
+
+  .message04-crown {
+    font-size:
+      19px;
+  }
+
+
+  .message04-kicker {
+    font-size:
+      7px;
+
+    letter-spacing:
+      2.8px;
+  }
+
+
+  .message04-title {
+    font-size:
+      clamp(
+        31px,
+        9vw,
+        39px
+      );
+  }
+
+
+  .message04-title span {
+    font-size:
+      1.15em;
+  }
+
+
+  .message04-title-ornament {
+    margin-top:
+      14px;
+  }
+
+
+  .message04-stage {
     width:
       min(
-        96vw,
+        100%,
         390px
       );
 
-    border-radius: 16px;
+    padding:
+      15px
+      6px
+      23px;
   }
 
-  .message-scene-header {
-    top: 43%;
-    left: 58%;
-    width: 48%;
-  }
 
-  .message-kicker {
-    font-size:
-      clamp(
-        7px,
-        1.95vw,
-        8.5px
+  .message04-frame-wrap {
+    width:
+      min(
+        100%,
+        355px
       );
-
-    letter-spacing: 1.5px;
   }
 
-  .message-mini-divider {
-    width: 72%;
-    gap: 5px;
-  }
 
-  .message-mini-divider b {
-    font-size: 8px;
-  }
+  .message04-frame-text {
+    top:
+      12%;
 
-  .message-note {
-    top: 55%;
-    left: 58%;
+    left:
+      11%;
 
     width:
-      clamp(
-        190px,
-        60%,
-        240px
-      );
+      78%;
+
+    height:
+      76%;
+
+    padding:
+      5px
+      7px;
   }
 
-  .message-note-content {
-    top: 20%;
-    left: 15%;
-    right: 15%;
-    bottom: 18%;
-  }
 
-  .message-quote {
-    font-size:
-      clamp(
-        9.6px,
-        2.7vw,
-        11.5px
-      );
-
-    line-height: 1.22;
-  }
-
-  .message-break {
-    height: 7px;
-  }
-
-  .message-scene-xv {
-    left: 58%;
-    bottom: 16%;
-
-    width: 48%;
+  .message04-inside-top {
+    margin-bottom:
+      5px;
 
     font-size:
-      clamp(
-        22px,
-        6vw,
-        29px
-      );
+      7px;
 
-    line-height: 1.02;
+    letter-spacing:
+      1.5px;
   }
 
-  .message-closing {
-    margin-top: 18px;
+
+  .message04-quote-mark {
+    height:
+      24px;
 
     font-size:
+      34px;
+  }
+
+
+  .message04-main-text {
+    font-size:
       clamp(
-        14px,
-        4vw,
-        17px
+        12px,
+        3.7vw,
+        14px
+      );
+
+    line-height:
+      1.27;
+  }
+
+
+  .message04-second {
+    margin-top:
+      6px;
+  }
+
+
+  .message04-mini-ornament {
+    margin:
+      6px
+      auto
+      2px;
+  }
+
+
+  .message04-inside-bottom {
+    margin-top:
+      5px;
+
+    font-size:
+      6.5px;
+
+    letter-spacing:
+      1.6px;
+  }
+
+
+  .message04-arch {
+    inset:
+      1%
+      1%
+      0;
+  }
+
+
+  .message04-bottom-jewel {
+    margin-top:
+      -6px;
+  }
+
+
+  .message04-bottom-jewel div {
+    width:
+      36px;
+
+    height:
+      36px;
+
+    font-size:
+      9px;
+  }
+
+
+  .message04-signature {
+    margin-top:
+      20px;
+  }
+
+
+  .message04-signature-small {
+    font-size:
+      7px;
+
+    letter-spacing:
+      2.3px;
+  }
+
+
+  .message04-name {
+    font-size:
+      clamp(
+        51px,
+        15vw,
+        65px
       );
   }
 
-  .message-continue {
-    margin-top: 16px;
+
+  .message04-closing {
+    width:
+      90%;
+
+    font-size:
+      15px;
+
+    line-height:
+      1.36;
   }
+
+
+  .message04-continue {
+    margin-top:
+      23px;
+  }
+
+
+  /*
+     En móvil reducimos efectos pesados
+     para mantener el scroll fluido.
+  */
+
+  .message04-aura {
+    filter:
+      blur(32px);
+  }
+
 }
 
 
-/* =====================================================
-   CELULARES 390PX
-   ===================================================== */
+/* =========================================================
+   CELULARES PEQUEÑOS
+   ========================================================= */
 
-@media (max-width: 390px) {
+@media (max-width: 370px) {
 
-  .message-note {
+  .message04-section {
+    padding-left:
+      6px;
+
+    padding-right:
+      6px;
+  }
+
+
+  .message04-stage {
     width:
-      clamp(
-        185px,
-        59%,
-        225px
+      min(
+        100%,
+        345px
       );
   }
 
-  .message-quote {
-    font-size: 9px;
-    line-height: 1.18;
+
+  .message04-frame-wrap {
+    width:
+      min(
+        100%,
+        325px
+      );
   }
 
-  .message-scene-xv {
-    font-size: 21px;
+
+  .message04-main-text {
+    font-size:
+      11.8px;
+
+    line-height:
+      1.24;
   }
 
-  .message-closing {
-    font-size: 14px;
+
+  .message04-title {
+    font-size:
+      29px;
   }
+
+
+  .message04-name {
+    font-size:
+      49px;
+  }
+
 }
 
 
-/* =====================================================
-   REDUCIR MOVIMIENTO
-   ===================================================== */
+/* =========================================================
+   ACCESIBILIDAD
+   ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
 
-  .message-scene-spark {
-    animation: none !important;
-  }
-
-  .message-reveal {
-    opacity: 1 !important;
-    filter: none !important;
-    transform: none !important;
+  .message04-spark {
+    animation:
+      none !important;
   }
 
 }
-/* =========================================================
-   AJUSTE CONSOLIDADO · SECCIÓN 04
-   MENSAJE ESPECIAL CON MARCO DE IMAGEN
-   ========================================================= */
 
-.message-section {
-  position: relative;
-  isolation: isolate;
-  width: 100%;
-  min-height: auto;
-  overflow: hidden;
-  padding: 52px 18px 58px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background:
-    radial-gradient(
-      circle at top,
-      rgba(255,255,255,0.94) 0%,
-      rgba(255,244,248,0.94) 24%,
-      rgba(248,226,234,0.96) 60%,
-      rgba(240,206,219,0.98) 100%
-    );
-  --message-x: 50%;
-  --message-y: 30%;
-}
-
-.message-section::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 1;
-  background:
-    radial-gradient(
-      circle at var(--message-x) var(--message-y),
-      rgba(255,255,255,0.22),
-      rgba(255,223,235,0.10) 22%,
-      transparent 48%
-    );
-}
-
-.message-section::after {
-  content: none;
-}
-
-.message-bg-light {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(28px);
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.55;
-}
-
-.message-bg-light.one {
-  width: 260px;
-  height: 260px;
-  top: 4%;
-  left: -60px;
-  background: rgba(255,213,228,0.50);
-}
-
-.message-bg-light.two {
-  width: 300px;
-  height: 300px;
-  right: -70px;
-  bottom: 2%;
-  background: rgba(255,194,218,0.36);
-}
-
-.message-section .ambient-canvas {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  opacity: 0.52;
-  pointer-events: none;
-}
-
-.message-content {
-  position: relative;
-  z-index: 5;
-  width: min(100%, 760px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.message-frame-wrap {
-  position: relative;
-  width: min(100%, 470px);
-  margin: 0 auto 18px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.message-frame-image {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-width: 470px;
-  object-fit: contain;
-  filter:
-    drop-shadow(0 14px 24px rgba(151,79,108,0.16))
-    drop-shadow(0 3px 8px rgba(255,255,255,0.42));
-  user-select: none;
-  pointer-events: none;
-  -webkit-user-drag: none;
-}
-
-.message-frame-text {
-  position: absolute;
-  top: 12%;
-  left: 11.5%;
-  width: 77%;
-  height: 76%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 8px 10px;
-  text-align: center;
-}
-
-.message-inside-top {
-  font-family: "Cormorant Garamond", serif;
-  font-size: 17px;
-  font-style: italic;
-  font-weight: 600;
-  line-height: 1.25;
-  color: #8c586d;
-  margin-bottom: 10px;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.65);
-}
-
-.message-quote-icon {
-  font-family: "Cormorant Garamond", serif;
-  font-size: 30px;
-  line-height: 1;
-  color: #deabc0;
-  margin-bottom: 2px;
-}
-
-.message-main-text {
-  font-family: "Cormorant Garamond", serif;
-  font-size: 18px;
-  line-height: 1.38;
-  color: #6f4858;
-  margin-bottom: 10px;
-  text-wrap: balance;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.72);
-}
-
-.message-main-text.second {
-  margin-bottom: 10px;
-}
-
-.message-frame-text strong {
-  color: #cb4c84;
-  font-weight: 700;
-}
-
-.message-mini-divider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 100%;
-  margin-top: 1px;
-  margin-bottom: 8px;
-}
-
-.message-mini-divider span {
-  width: 58px;
-  max-width: 22%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #d49ab0, transparent);
-}
-
-.message-mini-divider b {
-  color: #c46288;
-  font-size: 11px;
-  font-weight: 400;
-}
-
-.message-inside-bottom {
-  font-family: "Cinzel", serif;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 2.8px;
-  text-transform: uppercase;
-  color: #a35c7a;
-  margin-top: 1px;
-}
-
-.message-bottom {
-  width: 100%;
-  padding: 0 10px;
-}
-
-.message-big-title {
-  font-family: "Great Vibes", cursive;
-  font-size: 74px;
-  line-height: 0.95;
-  font-weight: 400;
-  margin-bottom: 8px;
-  padding: 0 4px;
-  max-width: 100%;
-  background: linear-gradient(
-    180deg,
-    #ffdbe8 0%,
-    #f8aac8 26%,
-    #e56a9a 56%,
-    #bc3d71 82%,
-    #f5c5d7 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 0 3px 7px rgba(145,68,96,0.10);
-  filter: none;
-  white-space: normal;
-  word-break: keep-all;
-  overflow-wrap: normal;
-}
-
-.message-divider {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.message-divider span {
-  width: 82px;
-  max-width: 22vw;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, #d392ab, transparent);
-}
-
-.message-divider b {
-  font-size: 12px;
-  color: #c46488;
-  font-weight: 400;
-}
-
-.bottom-divider {
-  margin-bottom: 10px;
-}
-
-.message-bottom-text {
-  font-family: "Cormorant Garamond", serif;
-  font-size: 19px;
-  font-weight: 600;
-  line-height: 1.32;
-  color: #7b4d61;
-  text-shadow: 0 1px 0 rgba(255,255,255,0.62);
-}
-
-.message-continue {
-  margin-top: 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  user-select: none;
-}
-
-.message-continue span:first-child {
-  font-family: "Cinzel", serif;
-  font-size: 10px;
-  letter-spacing: 3px;
-  color: #a35d79;
-  font-weight: 600;
-}
-
-.message-continue .scroll-arrow {
-  width: 14px;
-  height: 14px;
-  border-right: 1.6px solid #c06186;
-  border-bottom: 1.6px solid #c06186;
-  transform: rotate(45deg);
-  animation: messageArrowFloat 1.8s ease-in-out infinite;
-}
-
-@keyframes messageArrowFloat {
-  0%, 100% {
-    transform: rotate(45deg) translateY(0);
-    opacity: 0.8;
-  }
-  50% {
-    transform: rotate(45deg) translateY(5px);
-    opacity: 1;
-  }
-}
-
-.message-reveal {
-  opacity: 1;
-  filter: none;
-  transform: none;
-}
-
-@media (max-width: 768px) {
-  .message-section {
-    padding: 48px 16px 54px;
-  }
-
-  .message-frame-wrap {
-    width: min(100%, 420px);
-    margin-bottom: 16px;
-  }
-
-  .message-frame-image {
-    max-width: 420px;
-  }
-
-  .message-frame-text {
-    top: 12%;
-    left: 11.5%;
-    width: 77%;
-    height: 76%;
-    padding: 7px 8px;
-  }
-
-  .message-inside-top {
-    font-size: 15px;
-    margin-bottom: 8px;
-  }
-
-  .message-main-text {
-    font-size: 16px;
-    line-height: 1.34;
-    margin-bottom: 8px;
-  }
-
-  .message-inside-bottom {
-    font-size: 9px;
-    letter-spacing: 2.3px;
-  }
-
-  .message-big-title {
-    font-size: 60px;
-  }
-
-  .message-bottom-text {
-    font-size: 17px;
-  }
-}
-
-@media (max-width: 480px) {
-  .message-section {
-    padding: 44px 14px 50px;
-  }
-
-  .message-frame-wrap {
-    width: min(100%, 355px);
-    margin-bottom: 14px;
-  }
-
-  .message-frame-image {
-    max-width: 355px;
-  }
-
-  .message-frame-text {
-    top: 12%;
-    left: 11.2%;
-    width: 77.5%;
-    height: 76.5%;
-    padding: 6px 7px;
-  }
-
-  .message-inside-top {
-    font-size: 13.5px;
-    line-height: 1.2;
-    margin-bottom: 7px;
-  }
-
-  .message-quote-icon {
-    font-size: 24px;
-    margin-bottom: 1px;
-  }
-
-  .message-main-text {
-    font-size: 14.2px;
-    line-height: 1.3;
-    margin-bottom: 7px;
-  }
-
-  .message-mini-divider {
-    margin-bottom: 6px;
-  }
-
-  .message-mini-divider span {
-    width: 38px;
-  }
-
-  .message-inside-bottom {
-    font-size: 8px;
-    letter-spacing: 2px;
-  }
-
-  .message-big-title {
-    font-size: 49px;
-    line-height: 0.96;
-    margin-bottom: 6px;
-    text-shadow: 0 2px 4px rgba(145,68,96,0.08);
-  }
-
-  .bottom-divider {
-    margin-bottom: 8px;
-  }
-
-  .message-bottom-text {
-    font-size: 15px;
-    line-height: 1.28;
-  }
-
-  .message-continue {
-    margin-top: 14px;
-  }
-
-  .message-continue span:first-child {
-    font-size: 9px;
-    letter-spacing: 2.5px;
-  }
-}
-
-@media (max-width: 390px) {
-  .message-frame-wrap {
-    width: min(100%, 330px);
-  }
-
-  .message-frame-image {
-    max-width: 330px;
-  }
-
-  .message-frame-text {
-    top: 12%;
-    left: 11%;
-    width: 78%;
-    height: 76.5%;
-    padding: 5px 6px;
-  }
-
-  .message-inside-top {
-    font-size: 12.5px;
-    margin-bottom: 6px;
-  }
-
-  .message-main-text {
-    font-size: 13.2px;
-    line-height: 1.27;
-    margin-bottom: 6px;
-  }
-
-  .message-big-title {
-    font-size: 44px;
-  }
-
-  .message-bottom-text {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 360px) {
-  .message-section {
-    padding: 40px 12px 46px;
-  }
-
-  .message-frame-wrap {
-    width: min(100%, 315px);
-  }
-
-  .message-frame-image {
-    max-width: 315px;
-  }
-
-  .message-frame-text {
-    top: 12%;
-    left: 10.8%;
-    width: 78.4%;
-    height: 76.8%;
-    padding: 4px 5px;
-  }
-
-  .message-inside-top {
-    font-size: 12px;
-    margin-bottom: 5px;
-  }
-
-  .message-main-text {
-    font-size: 12.6px;
-    line-height: 1.24;
-    margin-bottom: 5px;
-  }
-
-  .message-inside-bottom {
-    font-size: 7.5px;
-    letter-spacing: 1.7px;
-  }
-
-  .message-big-title {
-    font-size: 40px;
-  }
-
-  .message-bottom-text {
-    font-size: 13px;
-  }
-}
 
 /* =========================================================
    SECCIÓN 05 · FECHA Y CUENTA REGRESIVA
